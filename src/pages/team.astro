@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TeamSection from "../components/TeamSection.astro";
+
+const sections = [
+  {
+    name: "Kowal Master",
+    description: "",
+    leaderName: "Antoni Tomczak",
+  },
+  {
+    name: "Kowale mechanicy",
+    description: "",
+    leaderName: "Rafał Wypychowski",
+  },
+  {
+    name: "Kowale elektronicy",
+    description: "",
+    leaderName: "Maciej Wójcik",
+  },
+  {
+    name: "Kowale informatyczne",
+    description: "",
+    leaderName: "Tymoteusz Tomczak",
+  },
+  {
+    name: "Kowale promocji",
+    description: "",
+    leaderName: "Domimnik Ziemiański",
+  },
+];
+---
+
+<Layout>
+  <section class="py-16">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Zespół</h1>
+    <p class="mt-4 max-w-2xl text-lg text-gray-600">Poznaj naszych kowali</p>
+  </section>
+
+  <section class="pb-16">
+    {
+      sections.map((section) => (
+        <TeamSection
+          name={section.name}
+          description={section.description}
+          leaderName={section.leaderName}
+        />
+      ))
+    }
+  </section>
+</Layout>

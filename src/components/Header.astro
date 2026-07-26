@@ -1,0 +1,40 @@
+---
+import robokop from "../assets/robokop_np_N.svg";
+
+const links = [
+    { href: "/projects", label: "Projekty" },
+    { href: "/team", label: "Zespół" },
+    { href: "/partners", label: "Partnerzy" },
+    { href: "/contact", label: "Kontakt" },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+---
+
+<header class="flex h-28 items-center px-8">
+    <a href="/" class="flex h-full flex-1 items-center py-4">
+        <img src={robokop.src} alt="RoboForge_logo" class="h-full w-auto" />
+    </a>
+    <nav class="flex h-10 items-center gap-10">
+        {
+            links.map((link) => {
+                const isActive =
+                    currentPath === `/${link.href.replace(/^\/+/, "")}`;
+                return (
+                    <a
+                        href={link.href}
+                        aria-current={isActive ? "page" : undefined}
+                        class:list={[
+                            "flex h-10 items-center border-b-2 text-lg font-medium transition-colors",
+                            isActive
+                                ? "border-brand-600 text-brand-600"
+                                : "border-transparent text-gray-600 hover:border-brand-300 hover:text-brand-600",
+                        ]}
+                    >
+                        {link.label}
+                    </a>
+                );
+            })
+        }
+    </nav>
+</header>

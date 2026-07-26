@@ -1,11 +1,132 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import SocialIcon from "../components/SocialIcon.astro";
+import Section from "../components/Section.astro";
+import Footer from "../components/Footer.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const socialLinks: {
+  label: string;
+  href: string;
+  icon: "github" | "facebook" | "instagram" | "linkedin" | "youtube";
+}[] = [
+  { label: "GitHub", href: "https://github.com/roboforgepp", icon: "github" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61584252311663",
+    icon: "facebook",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/roboforgepp/",
+    icon: "instagram",
+  },
+  // { label: "LinkedIn", href: "#", icon: "linkedin" },
+  // { label: "YouTube", href: "#", icon: "youtube" },
+];
+
+const projects = [
+  {
+    name: "Podstawa z kołami",
+    description:
+      "Podstawa z kołami umożliwiająca poruszanie się po prostym terenie.",
+  },
+  {
+    name: "Podstawa krocząca",
+    description:
+      "Podstawa odwzorowująca przemieszczanie się pająków, umożliwiająca poruszanie się po trudnym terenie.",
+  },
+  {
+    name: "Moduł transportowy",
+    description:
+      "Moduł transportowy umożliwiający przewożenie ładunków na różnorodnych terenach.",
+  },
+];
+
+const partners = ["Partner A", "Partner B", "Partner C", "Partner D"];
 ---
 
 <Layout>
-	<Welcome />
+  <section class="flex flex-col items-center gap-8 py-24 text-center">
+    <p class="text-sm font-semibold tracking-widest text-brand-600 uppercase">
+      Koło Naukowe Robotyki
+    </p>
+    <h1 class="max-w-3xl text-5xl font-bold tracking-tight text-gray-900">
+      Kujemy robota,<br /> którego chce się używać
+    </h1>
+    <p class="max-w-xl text-lg text-gray-600">
+      Jesteśmy młodym kołem naukowym studentów politechniki poznańskiej. Naszym
+      celem jest modularna konstrukcja ktrą można modyfikować pod własne
+      potrzeby.
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <Button href="/projects" variant="primary">
+        Zobacz nasze projekty
+      </Button>
+      <Button href="/contact" variant="secondary">Dołącz do nas</Button>
+    </div>
+    <div class="flex items-center gap-5 pt-2">
+      {
+        socialLinks.map((social) => (
+          <SocialIcon
+            href={social.href}
+            label={social.label}
+            icon={social.icon}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <Section
+    eyebrow="Nad czym pracujemy"
+    title="Projekty"
+    description="Nasze najnowsze projekty, nad którymi obecnie pracujemy."
+    href="/projects"
+    cta="Zobacz wszystkie projekty"
+  >
+    <ul class="flex flex-col">
+      {
+        projects.map((project) => (
+          <li class="border-t border-gray-200 py-4 first:border-t-0">
+            <p class="font-semibold text-gray-900">{project.name}</p>
+            <p class="text-sm text-gray-500">{project.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section
+    eyebrow="Wspólnie budujemy"
+    title="Partnerzy"
+    description="Osoby i instytucje dzięki którym możemy rozwijać nasze projekty i realizować nasze cele."
+    href="/partners"
+    cta="Zobacz naszych partnerów"
+  >
+    <div class="flex flex-wrap items-center gap-x-10 gap-y-6">
+      {
+        partners.map((partner) => (
+          <span class="text-lg font-semibold tracking-wide text-gray-400 uppercase">
+            {partner}
+          </span>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section
+    eyebrow="Ludzie za projektem"
+    title="Zespół"
+    description="Grupa odpowiedzialna za nasz rozwój. Zobacz kto stoi za naszymi projektami i poznaj ich bliżej."
+    href="/team"
+    cta="Poznaj cały zespół"
+  >
+    <div
+      class="flex aspect-video items-center justify-center border border-gray-200 bg-gray-100 text-gray-400"
+    >
+      <span class="text-sm">Zdjęcie zespołu</span>
+    </div>
+  </Section>
+  <Footer />
 </Layout>

@@ -1,0 +1,54 @@
+---
+interface Props {
+    name: string;
+    description: string;
+    leaderName: string;
+    leaderPhoto?: string;
+}
+
+const { name, description, leaderName, leaderPhoto } = Astro.props;
+---
+
+<div
+    class="grid gap-8 border-t border-gray-200 py-10 first:border-t-0 sm:grid-cols-3 sm:items-center"
+>
+    <div class="flex flex-col gap-2 sm:col-span-2">
+        <h2 class="text-2xl font-semibold text-gray-900">{name}</h2>
+        <p class="text-gray-600">{description}</p>
+    </div>
+    <div class="flex items-center gap-4">
+        <div
+            class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden border border-gray-200 bg-gray-100 text-gray-400"
+        >
+            {
+                leaderPhoto ? (
+                    <img
+                        src={leaderPhoto}
+                        alt={leaderName}
+                        class="h-full w-full object-cover"
+                    />
+                ) : (
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-7 w-7"
+                    >
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                )
+            }
+        </div>
+        <div>
+            <p class="text-xs tracking-wide text-gray-400 uppercase">
+                Przewodniczący sekcji
+            </p>
+            <p class="font-medium text-gray-900">{leaderName}</p>
+        </div>
+    </div>
+</div>
