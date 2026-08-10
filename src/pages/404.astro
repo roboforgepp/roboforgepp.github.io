@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/layout/Container.astro";
+import Button from "../components/ui/Button.astro";
+import { INK_TONE } from "../lib/tone";
+---
+
+<Layout title="Nie znaleziono strony" noindex>
+    <section
+        class:list={[
+            "relative isolate overflow-hidden bg-ink text-white",
+            INK_TONE,
+        ]}
+    >
+        <div
+            aria-hidden="true"
+            class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,102,255,.2),transparent_65%)] blur-3xl"
+        >
+        </div>
+
+        <Container size="wide" class="py-28 sm:py-36">
+            <p
+                class="text-sm font-semibold tracking-[0.2em] text-brand-400 uppercase"
+            >
+                Błąd 404
+            </p>
+            <h1
+                class="mt-5 max-w-2xl text-4xl font-bold tracking-tight text-balance sm:text-6xl"
+            >
+                Tego jeszcze nie wykuliśmy
+            </h1>
+            <p class="mt-5 max-w-xl text-lg text-white/64">
+                Strona, której szukasz, nie istnieje albo zmieniła adres.
+                Wróć na start albo zobacz, nad czym pracujemy.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+                <Button href="/" variant="primary">Strona główna</Button>
+                <Button href="/projects" variant="secondary">Projekty</Button>
+            </div>
+        </Container>
+    </section>
+</Layout>

@@ -1,0 +1,24 @@
+---
+import Stat from "./Stat.astro";
+
+/**
+ * Kafelki statystyk. `value` to albo liczba z `getStats()`, albo literał —
+ * dzięki temu efektowne „∞" z szablonu może stać obok policzonych liczb.
+ */
+interface Props {
+    items: { value: string | number; label: string }[];
+    class?: string;
+}
+
+const { items, class: className = "" } = Astro.props;
+---
+
+<div
+    data-reveal
+    class:list={[
+        "grid gap-8 sm:grid-cols-2 lg:grid-cols-4",
+        className,
+    ]}
+>
+    {items.map((item) => <Stat value={item.value} label={item.label} />)}
+</div>

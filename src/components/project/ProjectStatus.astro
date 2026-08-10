@@ -1,0 +1,34 @@
+---
+import { STATUS_META, type ProjectStatus } from "../../lib/projects";
+
+interface Props {
+    status: ProjectStatus;
+    /** Treść robocza — chip „w opracowaniu" pokazuje się tylko w trybie dev (§6). */
+    placeholder?: boolean;
+    class?: string;
+}
+
+const { status, placeholder = false, class: className = "" } = Astro.props;
+const meta = STATUS_META[status];
+---
+
+<span class:list={["inline-flex flex-wrap items-center gap-2", className]}>
+    <span
+        class:list={[
+            "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold",
+            meta.chip,
+        ]}
+    >
+        <span
+            class:list={["h-1.5 w-1.5 rounded-full", meta.dot]}
+            aria-hidden="true"></span>
+        {meta.label}
+    </span>
+    {
+        import.meta.env.DEV && placeholder && (
+            <span class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+                treść robocza
+            </span>
+        )
+    }
+</span>

@@ -1,0 +1,24 @@
+---
+/**
+ * Kontener treści. Wcześniej `max-w-5xl` siedział na <body>, przez co żadna sekcja
+ * nie mogła być full-bleed (B5). Teraz szerokość ogranicza ten komponent, a sekcje
+ * same decydują, czy tło ma iść na całą szerokość ekranu.
+ */
+interface Props {
+    /** `wide` dla siatek kart i list projektów, `narrow` dla samego tekstu. */
+    size?: "default" | "wide" | "narrow";
+    class?: string;
+}
+
+const { size = "default", class: className = "" } = Astro.props;
+
+const SIZES = {
+    default: "max-w-5xl",
+    wide: "max-w-6xl",
+    narrow: "max-w-3xl",
+} as const;
+---
+
+<div class:list={["mx-auto w-full px-5 sm:px-8", SIZES[size], className]}>
+    <slot />
+</div>

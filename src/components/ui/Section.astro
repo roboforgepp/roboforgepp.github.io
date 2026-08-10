@@ -1,0 +1,56 @@
+---
+import Container from "../layout/Container.astro";
+import { INK_TONE } from "../../lib/tone";
+
+/**
+ * Sekcja strony: tło na całą szerokość (full-bleed), treść w kontenerze.
+ * Wariant `ink` przestawia tokeny `--tone-*`, więc komponenty w środku
+ * (SectionHeading, Card, Tag, Stat) automatycznie przechodzą na jasny tekst.
+ */
+interface Props {
+    tone?: "white" | "paper" | "ink";
+    size?: "default" | "wide" | "narrow";
+    /** `tight` dla pasków statystyk, `loose` dla sekcji-bohaterów. */
+    space?: "tight" | "default" | "loose" | "none";
+    /** Cienka linia u góry — do rozdzielania sekcji o tym samym tle. */
+    divider?: boolean;
+    id?: string;
+    class?: string;
+}
+
+const {
+    tone = "white",
+    size = "default",
+    space = "default",
+    divider = false,
+    id,
+    class: className = "",
+} = Astro.props;
+
+const TONES = {
+    white: "bg-white",
+    paper: "bg-paper",
+    ink: `bg-ink text-white ${INK_TONE}`,
+} as const;
+
+const SPACE = {
+    none: "",
+    tight: "py-10 sm:py-12",
+    default: "py-16 sm:py-20",
+    loose: "py-20 sm:py-28",
+} as const;
+---
+
+<section
+    id={id}
+    class:list={[
+        TONES[tone],
+        SPACE[space],
+        divider && "border-t border-(--tone-line)",
+        className,
+    ]}
+>
+    <Container size={size}>
+        <slot />
+    </Container>
+</section>

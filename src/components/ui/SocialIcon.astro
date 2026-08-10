@@ -1,0 +1,48 @@
+---
+import SocialGlyph from "./SocialGlyph.astro";
+import type { SocialIconName } from "../../data/site";
+
+/**
+ * Okrągły przycisk z ikoną profilu — do stopki, hero i kolumny kontaktowej.
+ * Gdy kafelek sam jest linkiem (`/media`), użyj `SocialGlyph`, bo `<a>` w `<a>`
+ * jest niepoprawnym HTML-em.
+ */
+interface Props {
+    /** `null` = profil istnieje, ale linku jeszcze nie mamy (D7). */
+    href: string | null;
+    label: string;
+    icon: SocialIconName;
+    class?: string;
+}
+
+const { href, label, icon, class: className = "" } = Astro.props;
+
+const shared =
+    "flex h-10 w-10 items-center justify-center rounded-full transition-colors";
+---
+
+{
+    href ? (
+        <a
+            href={href}
+            aria-label={label}
+            rel="noopener noreferrer"
+            target="_blank"
+            class:list={[
+                shared,
+                "text-gray-400 hover:bg-brand-50 hover:text-brand-600",
+                className,
+            ]}
+        >
+            <SocialGlyph icon={icon} />
+        </a>
+    ) : (
+        <span
+            aria-label={`${label} — profil wkrótce`}
+            title={`${label} — profil wkrótce`}
+            class:list={[shared, "cursor-help text-gray-300", className]}
+        >
+            <SocialGlyph icon={icon} />
+        </span>
+    )
+}

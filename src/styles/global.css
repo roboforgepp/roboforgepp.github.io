@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+    /* Paleta marki — jedyny niebieski koła (D10). Zmiana palety = zmiana tych linii. */
     --color-brand-50: #eef4ff;
     --color-brand-100: #dae8ff;
     --color-brand-200: #bcd6ff;
@@ -12,4 +13,224 @@
     --color-brand-800: #0538a3;
     --color-brand-900: #0a3480;
     --color-brand-950: #071e4d;
+
+    /* Tła sekcji */
+    --color-ink: #07090d;
+    --color-ink-2: #11151d;
+    --color-paper: #f7f8fa;
+
+    --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
+        "Segoe UI", sans-serif;
+
+    --ease-forge: cubic-bezier(0.22, 0.8, 0.2, 1);
+    --radius-card: 18px;
+
+    /* Animacje wizualizacji projektów (port z szablonu, bez GSAP) */
+    --animate-rotate-ring: rotate-ring 20s linear infinite;
+    --animate-rotate-ring-fast: rotate-ring 11s linear infinite reverse;
+    --animate-scan: scan 3.4s ease-in-out infinite;
+    --animate-sweep: sweep 3s ease-in-out infinite;
+    --animate-arm-one: arm-one 5s ease-in-out infinite;
+    --animate-arm-two: arm-two 5s ease-in-out infinite;
+    --animate-bars: bars 2.8s ease-in-out infinite alternate;
+    --animate-float: float 6s ease-in-out infinite;
+
+    @keyframes rotate-ring {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes scan {
+        0%,
+        100% {
+            transform: translateX(-45%);
+            opacity: 0.3;
+        }
+        50% {
+            transform: translateX(45%);
+            opacity: 1;
+        }
+    }
+    @keyframes sweep {
+        0%,
+        100% {
+            transform: translateX(-30%) rotate(-16deg);
+            opacity: 0.25;
+        }
+        50% {
+            transform: translateX(30%) rotate(16deg);
+            opacity: 1;
+        }
+    }
+    @keyframes arm-one {
+        0%,
+        100% {
+            transform: rotate(-63deg);
+        }
+        50% {
+            transform: rotate(-48deg);
+        }
+    }
+    @keyframes arm-two {
+        0%,
+        100% {
+            transform: rotate(-12deg);
+        }
+        50% {
+            transform: rotate(10deg);
+        }
+    }
+    @keyframes bars {
+        to {
+            transform: scaleY(0.6);
+        }
+    }
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+}
+
+@layer base {
+    /*
+     * Tokeny „tonu" sekcji. `Section.astro` nadpisuje je dla wariantu ciemnego,
+     * dzięki czemu ten sam Card / SectionHeading / Tag działa na jasnym i ciemnym
+     * tle bez przekazywania propa `tone` przez pół drzewa komponentów.
+     */
+    :root {
+        --tone-fg: var(--color-gray-900);
+        --tone-muted: var(--color-gray-600);
+        --tone-faint: var(--color-gray-400);
+        --tone-line: var(--color-gray-200);
+        --tone-surface: var(--color-gray-50);
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        min-width: 20rem;
+        overflow-x: hidden;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    ::selection {
+        color: #fff;
+        background: var(--color-brand-600);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+}
+
+/*
+ * Animacje wejścia. Element z `data-reveal` startuje przygaszony i przesunięty,
+ * a skrypt w Layout.astro (IntersectionObserver) dokłada `is-visible`.
+ * Bez JS-u albo przy prefers-reduced-motion treść jest po prostu widoczna.
+ */
+@layer components {
+    [data-reveal] {
+        opacity: 0;
+        transform: translateY(1.25rem);
+        transition:
+            opacity 0.7s var(--ease-forge),
+            transform 0.7s var(--ease-forge);
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    [data-reveal].is-visible {
+        opacity: 1;
+        transform: none;
+    }
+
+    /*
+     * Typografia treści z markdown (opisy projektów). Kilkanaście linii zamiast
+     * wtyczki @tailwindcss/typography — używamy z tego i tak tylko czterech znaczników.
+     */
+    .prose-forge {
+        color: var(--tone-muted);
+        line-height: 1.7;
+    }
+
+    .prose-forge > * + * {
+        margin-top: 1.25em;
+    }
+
+    .prose-forge h2 {
+        margin-top: 2.5em;
+        color: var(--tone-fg);
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    .prose-forge h3 {
+        margin-top: 2em;
+        color: var(--tone-fg);
+        font-size: 1.175rem;
+        font-weight: 600;
+    }
+
+    .prose-forge strong {
+        color: var(--tone-fg);
+        font-weight: 600;
+    }
+
+    .prose-forge a {
+        color: var(--color-brand-600);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .prose-forge ul,
+    .prose-forge ol {
+        padding-left: 1.25em;
+        list-style: revert;
+    }
+
+    .prose-forge li + li {
+        margin-top: 0.4em;
+    }
+
+    .prose-forge code {
+        padding: 0.15em 0.4em;
+        color: var(--tone-fg);
+        background: var(--tone-surface);
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    [data-reveal],
+    [data-reveal].is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

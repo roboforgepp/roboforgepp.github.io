@@ -1,0 +1,20 @@
+---
+interface Props {
+    variant?: "default" | "brand";
+    class?: string;
+}
+
+const { variant = "default", class: className = "" } = Astro.props;
+---
+
+<span
+    class:list={[
+        "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium tracking-wide",
+        variant === "brand"
+            ? "bg-brand-50 text-brand-700"
+            : "border border-(--tone-line) text-(--tone-muted)",
+        className,
+    ]}
+>
+    <slot />
+</span>

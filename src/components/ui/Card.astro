@@ -1,0 +1,45 @@
+---
+/**
+ * Kafelek. Jako `<a>`, gdy dostanie `href` — wtedy dochodzi hover z podniesieniem.
+ */
+interface Props {
+    href?: string;
+    tone?: "surface" | "outline";
+    padding?: "default" | "tight" | "none";
+    class?: string;
+    /** Reszta atrybutów leci na element — np. `data-reveal`, `target`, `aria-*`. */
+    [key: string]: unknown;
+}
+
+const {
+    href,
+    tone = "surface",
+    padding = "default",
+    class: className = "",
+    ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "div";
+
+const TONES = {
+    surface: "bg-(--tone-surface) border border-(--tone-line)",
+    outline: "border border-(--tone-line)",
+} as const;
+
+const PADDING = { none: "", tight: "p-5", default: "p-6 sm:p-8" } as const;
+---
+
+<Tag
+    href={href}
+    {...rest}
+    class:list={[
+        "group relative flex flex-col overflow-hidden rounded-card transition-all duration-300 ease-forge",
+        TONES[tone],
+        PADDING[padding],
+        href &&
+            "hover:-translate-y-1 hover:border-brand-400 hover:shadow-lg hover:shadow-brand-600/10",
+        className,
+    ]}
+>
+    <slot />
+</Tag>

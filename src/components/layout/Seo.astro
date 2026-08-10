@@ -1,0 +1,55 @@
+---
+import { INDEXABLE, SITE } from "../../data/site";
+
+/**
+ * Metadane strony (B2). Każda podstrona podaje własny tytuł i opis — wcześniej
+ * wszystkie miały ten sam tytuł „Robo Forge" i żadnego opisu.
+ */
+interface Props {
+    title?: string;
+    description?: string;
+    /** Obraz OG względem katalogu public/, np. "/og/projekty.jpg". */
+    image?: string;
+    noindex?: boolean;
+}
+
+const {
+    title,
+    description = SITE.description,
+    image,
+    noindex = false,
+} = Astro.props;
+
+/**
+ * Dopóki `INDEXABLE` jest wyłączone, cała strona idzie jako `noindex, nofollow`.
+ * Poza tym trybem `noindex` zostaje propem pojedynczej podstrony (404), gdzie
+ * chcemy `follow` — linki w stopce mają być dalej przechodzone.
+ */
+const robots = !INDEXABLE
+    ? "noindex, nofollow"
+    : noindex
+      ? "noindex, follow"
+      : null;
+
+const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.shortDescription}`;
+const canonical = new URL(Astro.url.pathname.replace(/\/+$/, "") || "/", Astro.site ?? SITE.url);
+const ogImage = image ? new URL(image, Astro.site ?? SITE.url).href : undefined;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical.href} />
+{robots && <meta name="robots" content={robots} />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical.href} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}

@@ -1,0 +1,50 @@
+---
+interface Props {
+    href: string;
+    variant?: "primary" | "secondary" | "ghost";
+    size?: "default" | "small";
+    /** Otwiera w nowej karcie i dokłada rel. */
+    external?: boolean;
+    class?: string;
+}
+
+const {
+    href,
+    variant = "primary",
+    size = "default",
+    external = false,
+    class: className = "",
+} = Astro.props;
+
+const VARIANTS = {
+    primary: "bg-brand-600 text-white hover:bg-brand-700",
+    // Bierze kolor z tonu sekcji, więc działa i na białym, i na `bg-ink`.
+    secondary:
+        "border border-(--tone-line) text-(--tone-fg) hover:border-brand-400 hover:text-brand-600",
+    ghost: "text-brand-600 hover:text-brand-700",
+} as const;
+
+const SIZES = {
+    default: variant === "ghost" ? "" : "px-6 py-3",
+    small: variant === "ghost" ? "" : "px-4 py-2 text-sm",
+} as const;
+---
+
+<a
+    href={href}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+    class:list={[
+        "group inline-flex items-center gap-2 rounded-md font-medium transition-colors",
+        VARIANTS[variant],
+        SIZES[size],
+        className,
+    ]}
+>
+    <slot />
+    <span
+        aria-hidden="true"
+        class="transition-transform duration-200 ease-forge group-hover:translate-x-1"
+        >→</span
+    >
+</a>

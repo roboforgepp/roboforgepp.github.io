@@ -1,0 +1,98 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import PlaceholderBox from "../components/ui/PlaceholderBox.astro";
+import SocialTile from "../components/ui/SocialTile.astro";
+import { CONTACTS, RADIO_EPISODE, SOCIALS } from "../data/site";
+---
+
+<Layout
+    title="Media"
+    description="Audycja radiowa RoboForge, profile w social mediach i materiały prasowe koła naukowego Politechniki Poznańskiej."
+>
+    <PageHeader
+        eyebrow="Posłuchaj i obejrzyj"
+        title="RoboForge poza warsztatem"
+        description="Audycja radiowa, relacje z budowy i materiały do pobrania dla dziennikarzy. Wszystko w jednym miejscu."
+    />
+
+    <!-- D8 — audycja jako „backdrop" -->
+    <Section tone="white" space="default" size="wide">
+        <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <SectionHeading
+                eyebrow="Audycja"
+                title="Nasza audycja radiowa"
+                description="Opowiadamy, skąd wziął się pomysł na modułowego robota i jak wygląda praca w kole od środka. Do posłuchania w tle — przy lutownicy albo w drodze na zajęcia."
+            >
+                <p class="text-sm text-gray-500">
+                    Jeśli znajdą się chętni, chcemy zrobić z tego cykl
+                    comiesięczny. Zgłoszenia do prowadzenia mile widziane.
+                </p>
+            </SectionHeading>
+
+            <div data-reveal>
+                <iframe
+                    src={RADIO_EPISODE.embedUrl}
+                    title={RADIO_EPISODE.title}
+                    width="100%"
+                    height="232"
+                    loading="lazy"
+                    allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    class="block w-full border-0"></iframe>
+
+                <a
+                    href={RADIO_EPISODE.spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-3 inline-block text-sm font-medium text-brand-600 hover:text-brand-700"
+                >
+                    Otwórz w Spotify ↗
+                </a>
+            </div>
+        </div>
+    </Section>
+
+    <!-- D7 — sociale z TikTokiem -->
+    <Section tone="paper" space="default" size="wide">
+        <SectionHeading
+            eyebrow="Social media"
+            title="Gdzie nas znajdziesz"
+            description="Relacje z warsztatu, postępy przy konstrukcji i zapowiedzi wydarzeń."
+        />
+        <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {
+                SOCIALS.map((social) => (
+                    <li>
+                        <SocialTile
+                            href={social.href}
+                            label={social.label}
+                            icon={social.icon}
+                            handle={social.handle}
+                        />
+                    </li>
+                ))
+            }
+        </ul>
+    </Section>
+
+    <!-- <Section tone="white" space="default" size="wide">
+        <div class="grid gap-10 sm:grid-cols-2 sm:items-center">
+            <SectionHeading
+                eyebrow="Dla mediów"
+                title="Pakiet materiałów"
+                description="Logotypy w wersji jasnej i ciemnej, zdjęcia konstrukcji i krótki opis koła do przeklejenia. Przygotowujemy paczkę — do tego czasu napisz, a wyślemy materiały mailem."
+                href={`mailto:${CONTACTS[0].email}?subject=${encodeURIComponent("Materiały prasowe RoboForge")}`}
+                cta="Poproś o materiały"
+            />
+            <div data-reveal>
+                <PlaceholderBox
+                    label="Paczka z logotypami i zdjęciami"
+                    awaiting="Dominik / sekcja promocji"
+                    ratio="wide"
+                />
+            </div>
+        </div>
+    </Section> -->
+</Layout>

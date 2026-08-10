@@ -1,0 +1,23 @@
+---
+interface Props {
+    value: string | number;
+    label: string;
+}
+
+const { value, label } = Astro.props;
+
+// Policzone liczby wyglądają lepiej z zerem wiodącym („03" zamiast „3"),
+// ale literały w rodzaju „∞" zostawiamy w spokoju.
+const display =
+    typeof value === "number" && value < 10 && value >= 0
+        ? String(value).padStart(2, "0")
+        : String(value);
+---
+
+<div class="flex flex-col gap-2 border-t border-(--tone-line) pt-5">
+    <span
+        class="text-4xl font-bold tracking-tight text-brand-600 tabular-nums sm:text-5xl"
+        >{display}</span
+    >
+    <span class="text-sm text-(--tone-muted)">{label}</span>
+</div>

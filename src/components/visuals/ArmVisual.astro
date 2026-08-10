@@ -1,0 +1,61 @@
+---
+/**
+ * Ramię robotyczne: dwa człony w pętli animacji, przeguby i chwytak.
+ * Rysunek ma stałe wymiary (27,5 × 17 rem) i skaluje się do szerokości sceny —
+ * dzięki temu wygląda tak samo w wąskiej karcie i w szerokim wierszu listy.
+ */
+interface Props {
+    class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const segment =
+    "absolute h-[18px] origin-left rounded-full border-2 border-brand-600 bg-brand-600/10";
+const joint =
+    "absolute aspect-square w-8 rounded-full border-[3px] border-brand-600 bg-ink-2 shadow-[0_0_20px_rgba(0,102,255,.25)]";
+---
+
+<div
+    aria-hidden="true"
+    class:list={["absolute inset-0 grid place-items-center", className]}
+>
+    <div
+        class="h-[17rem] w-[27.5rem] scale-[0.6] @sm:scale-[0.75] @md:scale-90 @lg:scale-100"
+    >
+        <div class="relative h-full w-full">
+            <div
+                class="absolute bottom-1.5 left-[20%] h-[30px] w-[60%] rounded-lg border-2 border-brand-600 bg-brand-600/10"
+            >
+            </div>
+
+            <div
+                class:list={[
+                    segment,
+                    "bottom-[42px] left-[36%] w-[150px] animate-arm-one",
+                ]}
+            >
+            </div>
+            <div
+                class:list={[
+                    segment,
+                    "bottom-[176px] left-[49%] w-[126px] animate-arm-two",
+                ]}
+            >
+            </div>
+
+            <div class:list={[joint, "bottom-[35px] left-[32%]"]}></div>
+            <div class:list={[joint, "bottom-[168px] left-[48%]"]}></div>
+
+            <div
+                class="absolute top-[72px] right-[14%] h-[50px] w-[54px] border-l-[3px] border-brand-600"
+            >
+                <span
+                    class="absolute top-[5px] left-0 h-[3px] w-10 origin-left rotate-[28deg] bg-brand-600"
+                ></span>
+                <span
+                    class="absolute bottom-[5px] left-0 h-[3px] w-10 origin-left -rotate-[28deg] bg-brand-600"
+                ></span>
+            </div>
+        </div>
+    </div>
+</div>

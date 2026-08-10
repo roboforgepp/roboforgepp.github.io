@@ -1,0 +1,129 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
+import Section from "../../components/ui/Section.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+import Button from "../../components/ui/Button.astro";
+import ProjectRow from "../../components/project/ProjectRow.astro";
+import {
+    STATUS_META,
+    STATUS_ORDER,
+    getPublishedProjects,
+} from "../../lib/projects";
+
+const projects = await getPublishedProjects();
+
+// Filtr pokazuje tylko te statusy, które faktycznie występują — żeby nie było
+// przycisku „Wstrzymany", pod którym nic nie ma.
+const usedStatuses = STATUS_ORDER.filter((status) =>
+    projects.some((project) => project.data.status === status),
+);
+---
+
+<Layout
+    title="Projekty"
+    description="Modułowa platforma RF-01: podstawy kołowa, krocząca i gąsienicowa, nadstawy oraz projekty pokazowe koła RoboForge."
+>
+    <PageHeader
+        eyebrow="Nad czym pracujemy"
+        title="Zobacz, co kujemy w naszej kuźni"
+        description="Nie budujemy jednego robota. Budujemy system, z którego może powstać wiele maszyn — wspólny rdzeń, wymienne podstawy i nadstawy dobierane do zadania."
+    />
+
+    <Section size="wide" space="default">
+        <div
+            class="flex flex-wrap items-center gap-2"
+            role="group"
+            aria-label="Filtr projektów po statusie"
+        >
+            <button
+                type="button"
+                data-filter="all"
+                aria-pressed="true"
+                class="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 transition-colors aria-pressed:border-brand-600 aria-pressed:bg-brand-600 aria-pressed:text-white"
+            >
+                Wszystkie ({projects.length})
+            </button>
+            {
+                usedStatuses.map((status) => (
+                    <button
+                        type="button"
+                        data-filter={status}
+                        aria-pressed="false"
+                        class="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 transition-colors aria-pressed:border-brand-600 aria-pressed:bg-brand-600 aria-pressed:text-white"
+                    >
+                        {STATUS_META[status].label} (
+                        {
+                            projects.filter((p) => p.data.status === status)
+                                .length
+                        }
+                        )
+                    </button>
+                ))
+            }
+        </div>
+
+        <div id="project-list" class="mt-4">
+            {
+                projects.map((project, index) => (
+                    <ProjectRow project={project} flip={index % 2 === 1} />
+                ))
+            }
+        </div>
+
+        <p id="filter-empty" class="hidden py-12 text-gray-500">
+            Brak projektów o tym statusie.
+        </p>
+    </Section>
+
+    <!-- „Masz pomysł?" z szablonu — domknięcie listy zamiast urwania na ostatnim wierszu. -->
+    <Section tone="paper" space="default" size="wide">
+        <div class="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <SectionHeading
+                eyebrow="Masz pomysł?"
+                title="Projekt może zacząć się od rozmowy"
+            />
+            <div>
+                <p
+                    data-reveal
+                    class="text-lg text-pretty text-(--tone-muted)"
+                >
+                    Firmy, laboratoria i organizacje mogą zgłaszać problemy
+                    technologiczne, pomysły na prototyp lub możliwość wspólnych
+                    testów.
+                </p>
+                <div class="mt-6" data-reveal style="--reveal-delay:80ms">
+                    <Button href="/partners" variant="primary">
+                        Zaproponuj współpracę
+                    </Button>
+                </div>
+            </div>
+        </div>
+    </Section>
+</Layout>
+
+<script>
+    // Filtr działa bez przeładowania; bez JS-u widać po prostu wszystkie projekty.
+    const chips =
+        document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const rows = document.querySelectorAll<HTMLElement>("[data-status]");
+    const empty = document.getElementById("filter-empty");
+
+    chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+            const wanted = chip.dataset.filter;
+            chips.forEach((other) =>
+                other.setAttribute("aria-pressed", String(other === chip)),
+            );
+
+            let visible = 0;
+            rows.forEach((row) => {
+                const show = wanted === "all" || row.dataset.status === wanted;
+                row.classList.toggle("hidden", !show);
+                if (show) visible += 1;
+            });
+
+            empty?.classList.toggle("hidden", visible > 0);
+        });
+    });
+</script>

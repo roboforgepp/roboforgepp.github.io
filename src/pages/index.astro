@@ -1,132 +1,325 @@
 ---
+import { getCollection } from "astro:content";
+
 import Layout from "../layouts/Layout.astro";
-import Button from "../components/Button.astro";
-import SocialIcon from "../components/SocialIcon.astro";
-import Section from "../components/Section.astro";
-import Footer from "../components/Footer.astro";
+import Hero from "../components/ui/Hero.astro";
+import Section from "../components/ui/Section.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import Button from "../components/ui/Button.astro";
+import StatsGrid from "../components/ui/StatsGrid.astro";
+import PlaceholderBox from "../components/ui/PlaceholderBox.astro";
+import SocialIcon from "../components/ui/SocialIcon.astro";
+import QuoteBand from "../components/ui/QuoteBand.astro";
+import ProjectCard from "../components/project/ProjectCard.astro";
+import PartnerLogo from "../components/partners/PartnerLogo.astro";
+import VisualStage from "../components/visuals/VisualStage.astro";
+import RobotAssembly from "../components/visuals/RobotAssembly.astro";
+import LidarDiagram from "../components/visuals/LidarDiagram.astro";
+import {
+    getBases,
+    getLatestProjects,
+    getPublishedProjects,
+} from "../lib/projects";
+import { getStats } from "../lib/stats";
+import { RADIO_EPISODE, SOCIALS } from "../data/site";
 
-const socialLinks: {
-  label: string;
-  href: string;
-  icon: "github" | "facebook" | "instagram" | "linkedin" | "youtube";
-}[] = [
-  { label: "GitHub", href: "https://github.com/roboforgepp", icon: "github" },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/profile.php?id=61584252311663",
-    icon: "facebook",
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/roboforgepp/",
-    icon: "instagram",
-  },
-  // { label: "LinkedIn", href: "#", icon: "linkedin" },
-  // { label: "YouTube", href: "#", icon: "youtube" },
+const latest = await getLatestProjects(3);
+const stats = await getStats();
+const partners = (await getCollection("partners")).sort(
+    (a, b) => a.data.order - b.data.order,
+);
+
+// Podstawy platformy (D3) idą wprost z kolekcji — dopisanie czwartej to nowy
+// plik .md, bez dotykania tej strony.
+const bases = await getBases();
+const firstBase = bases[0]?.module ?? "wheels";
+
+// Rdzeń platformy ma własną podstronę — szukamy go po kategorii, żeby zmiana
+// nazwy pliku nie zostawiła tu martwego linku.
+const platform = (await getPublishedProjects()).find(
+    (project) => project.data.category === "Platforma",
+);
+const platformHref = platform ? `/projects/${platform.id}` : "/projects";
+
+const statItems = [
+    { value: stats.projects, label: "Projekty w kuźni" },
+    { value: stats.bases, label: "Wymienne podstawy platformy" },
+    { value: stats.sections, label: "Sekcje w kole" },
+    { value: "∞", label: "Możliwości dalszej rozbudowy" },
 ];
-
-const projects = [
-  {
-    name: "Podstawa z kołami",
-    description:
-      "Podstawa z kołami umożliwiająca poruszanie się po prostym terenie.",
-  },
-  {
-    name: "Podstawa krocząca",
-    description:
-      "Podstawa odwzorowująca przemieszczanie się pająków, umożliwiająca poruszanie się po trudnym terenie.",
-  },
-  {
-    name: "Moduł transportowy",
-    description:
-      "Moduł transportowy umożliwiający przewożenie ładunków na różnorodnych terenach.",
-  },
-];
-
-const partners = ["Partner A", "Partner B", "Partner C", "Partner D"];
 ---
 
 <Layout>
-  <section class="flex flex-col items-center gap-8 py-24 text-center">
-    <p class="text-sm font-semibold tracking-widest text-brand-600 uppercase">
-      Koło Naukowe Robotyki
-    </p>
-    <h1 class="max-w-3xl text-5xl font-bold tracking-tight text-gray-900">
-      Kujemy robota,<br /> którego chce się używać
-    </h1>
-    <p class="max-w-xl text-lg text-gray-600">
-      Jesteśmy młodym kołem naukowym studentów politechniki poznańskiej. Naszym
-      celem jest modularna konstrukcja ktrą można modyfikować pod własne
-      potrzeby.
-    </p>
-    <div class="flex flex-wrap items-center justify-center gap-4">
-      <Button href="/projects" variant="primary">
-        Zobacz nasze projekty
-      </Button>
-      <Button href="/contact" variant="secondary">Dołącz do nas</Button>
-    </div>
-    <div class="flex items-center gap-5 pt-2">
-      {
-        socialLinks.map((social) => (
-          <SocialIcon
-            href={social.href}
-            label={social.label}
-            icon={social.icon}
-          />
-        ))
-      }
-    </div>
-  </section>
-
-  <Section
-    eyebrow="Nad czym pracujemy"
-    title="Projekty"
-    description="Nasze najnowsze projekty, nad którymi obecnie pracujemy."
-    href="/projects"
-    cta="Zobacz wszystkie projekty"
-  >
-    <ul class="flex flex-col">
-      {
-        projects.map((project) => (
-          <li class="border-t border-gray-200 py-4 first:border-t-0">
-            <p class="font-semibold text-gray-900">{project.name}</p>
-            <p class="text-sm text-gray-500">{project.description}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </Section>
-
-  <Section
-    eyebrow="Wspólnie budujemy"
-    title="Partnerzy"
-    description="Osoby i instytucje dzięki którym możemy rozwijać nasze projekty i realizować nasze cele."
-    href="/partners"
-    cta="Zobacz naszych partnerów"
-  >
-    <div class="flex flex-wrap items-center gap-x-10 gap-y-6">
-      {
-        partners.map((partner) => (
-          <span class="text-lg font-semibold tracking-wide text-gray-400 uppercase">
-            {partner}
-          </span>
-        ))
-      }
-    </div>
-  </Section>
-
-  <Section
-    eyebrow="Ludzie za projektem"
-    title="Zespół"
-    description="Grupa odpowiedzialna za nasz rozwój. Zobacz kto stoi za naszymi projektami i poznaj ich bliżej."
-    href="/team"
-    cta="Poznaj cały zespół"
-  >
-    <div
-      class="flex aspect-video items-center justify-center border border-gray-200 bg-gray-100 text-gray-400"
+    <Hero
+        kicker="Koło Naukowe Politechniki Poznańskiej"
+        titleLines={["Kujemy robota,", "którego chce", "się używać."]}
+        description="Jesteśmy młodym kołem naukowym studentów Politechniki Poznańskiej. Budujemy modułową konstrukcję, którą można modyfikować pod własne potrzeby — od podstawy jezdnej po osprzęt na górze."
     >
-      <span class="text-sm">Zdjęcie zespołu</span>
-    </div>
-  </Section>
-  <Footer />
+        <Button href="/projects" variant="primary">Zobacz nasze projekty</Button
+        >
+        <Button href="/contact" variant="secondary">Dołącz do nas</Button>
+        <div class="flex items-center gap-1 sm:ml-2">
+            {
+                SOCIALS.map((social) => (
+                    <SocialIcon
+                        href={social.href}
+                        label={social.label}
+                        icon={social.icon}
+                        class="text-white/50 hover:bg-white/10 hover:text-white"
+                    />
+                ))
+            }
+        </div>
+    </Hero>
+
+    <!-- Manifest -->
+    <Section id="manifest" tone="white" space="loose" size="wide">
+        <p
+            data-reveal
+            class="max-w-4xl text-3xl leading-tight font-bold tracking-tight text-balance sm:text-5xl"
+        >
+            Nie budujemy jednego robota.<br />
+            <span class="text-gray-400"
+                >Budujemy system, z którego może powstać wiele maszyn.</span
+            >
+        </p>
+    </Section>
+
+    <Section tone="white" space="tight" size="wide" divider>
+        <StatsGrid items={statItems} />
+    </Section>
+
+    <!-- Projekt flagowy: jedna platforma, trzy podstawy -->
+    <Section tone="paper" space="default" size="wide">
+        <div class="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <div>
+                <SectionHeading
+                    eyebrow="Projekt flagowy"
+                    title="Jedna platforma. Wiele zadań."
+                    description="Rdzeń konstrukcji pozostaje ten sam. Zmieniamy sposób poruszania, osprzęt i sensory zależnie od misji."
+                />
+
+                <div class="mt-8 flex flex-col gap-2" data-reveal>
+                    {
+                        bases.map((base) => (
+                            <button
+                                type="button"
+                                data-base={base.module}
+                                aria-pressed="false"
+                                class="flex gap-4 rounded-card border border-transparent p-4 text-left transition-colors hover:bg-white aria-pressed:border-brand-200 aria-pressed:bg-white"
+                            >
+                                <span class="text-sm font-bold text-brand-600 tabular-nums">
+                                    {base.number}
+                                </span>
+                                <span>
+                                    <span class="block font-semibold text-gray-900">
+                                        {base.project.data.title}
+                                    </span>
+                                    {/* `summary` jest pisany pod kartę projektu i bywa dłuższy;
+                                        tutaj dwie linie wystarczą, a lista nie przerasta
+                                        wysokością wizualizacji obok.
+                                        Bez `block` — `line-clamp` ustawia własny `display`
+                                        i utility `block` by go nadpisało. */}
+                                    <span class="mt-1 line-clamp-2 text-sm text-gray-600">
+                                        {base.project.data.summary}
+                                    </span>
+                                </span>
+                            </button>
+                        ))
+                    }
+                </div>
+
+                <Button href={platformHref} variant="ghost" class="mt-6">
+                    Zobacz założenia projektu
+                </Button>
+            </div>
+
+            <VisualStage
+                label="Model koncepcyjny / wybierz podstawę"
+                class="aspect-square w-full rounded-card lg:h-[34rem] lg:aspect-auto"
+            >
+                <RobotAssembly id="robot-stage" module={firstBase} />
+            </VisualStage>
+        </div>
+    </Section>
+
+    <!--
+      Projekty. CTA celowo pod kartami, a nie w nagłówku: w nagłówku wisiało
+      między opisem a siatką i rozbijało blok tekstu.
+    -->
+    <Section tone="white" space="default" size="wide">
+        <SectionHeading
+            eyebrow="Nad czym pracujemy"
+            title="Technologia, która opuszcza ekran CAD-a"
+            description="Najnowsze z kuźni. Każdy projekt ma własną podstronę z opisem, stanem prac i plikami do pobrania."
+        />
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {latest.map((project) => <ProjectCard project={project} />)}
+        </div>
+        <div class="mt-10" data-reveal>
+            <Button href="/projects" variant="secondary">
+                Zobacz wszystkie projekty
+            </Button>
+        </div>
+    </Section>
+
+    <!-- Głos zespołu -->
+    <QuoteBand
+        tone="paper"
+        eyebrow="Głos zespołu"
+        quote="Nie chcemy kończyć na efektownych wizualizacjach. Każdy pomysł ma przejść przez warsztat, testy i kontakt z rzeczywistym problemem."
+        author="Zarząd RoboForge"
+    />
+
+    <!-- RoboForge w eterze -->
+    <Section tone="white" space="default" size="wide">
+        <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <SectionHeading
+                eyebrow="RoboForge w eterze"
+                title="Posłuchaj, jak opowiadamy o technologii"
+                description="Pierwsza audycja jest już dostępna — zapis rozmowy o kole, projektach i drodze od pomysłu do prototypu."
+            >
+                <div class="mt-2 flex flex-wrap items-center gap-4">
+                    <Button
+                        href={RADIO_EPISODE.spotifyUrl}
+                        variant="primary"
+                        external
+                    >
+                        Otwórz w Spotify
+                    </Button>
+                    <Button href="/media" variant="secondary">
+                        Media i sociale
+                    </Button>
+                </div>
+            </SectionHeading>
+
+            <VisualStage
+                label="Audycja / odcinek pierwszy"
+                class="aspect-[16/10] w-full rounded-card"
+                data-reveal
+            >
+                <LidarDiagram label="ON AIR" />
+            </VisualStage>
+        </div>
+    </Section>
+
+    <!-- Zespół -->
+    <Section tone="paper" space="default" size="wide">
+        <div class="grid gap-10 sm:grid-cols-2 sm:items-center">
+            <SectionHeading
+                eyebrow="Ludzie za projektem"
+                title="Zespół"
+                description="Mechanicy, elektronicy, informatycy i promocja. Pięć sekcji, jeden robot — zobacz, kto stoi za projektami."
+                href="/team"
+                cta="Poznaj cały zespół"
+            />
+            <div data-reveal>
+                <PlaceholderBox
+                    label="Zdjęcie zespołu"
+                    awaiting="Dominik / sekcja promocji"
+                />
+            </div>
+        </div>
+    </Section>
+
+    <!--
+      Partnerzy jako ściana logotypów. Wcześniej był to rząd szarych nazw,
+      przez co sekcja wyglądała na niedokończoną — te same dane w kafelkach
+      trzymają rytm reszty strony i są gotowe na podmianę na prawdziwe logo.
+    -->
+    <Section tone="white" space="default" size="wide">
+        <SectionHeading
+            eyebrow="Wspólnie budujemy"
+            title="Prototypy powstają dzięki dobrym partnerstwom"
+            description="Firmy i instytucje, dzięki którym nasze projekty wychodzą poza ekran CAD-a."
+        />
+        <ul
+            data-reveal
+            class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        >
+            {
+                partners.map((partner) => (
+                    <li class="flex flex-col gap-2">
+                        <PartnerLogo
+                            partner={partner}
+                            class="h-24 border border-gray-200"
+                        />
+                        {!partner.data.confirmed && (
+                            <span class="text-center text-xs text-gray-400">
+                                w rozmowach
+                            </span>
+                        )}
+                    </li>
+                ))
+            }
+        </ul>
+        <div class="mt-10" data-reveal>
+            <Button href="/partners" variant="secondary">
+                Poznaj współpracę
+            </Button>
+        </div>
+    </Section>
+
+    <!-- Dołóż swoją iskrę -->
+    <Section tone="ink" space="loose" size="wide">
+        <div class="flex flex-col items-start gap-6">
+            <h2
+                data-reveal
+                class="max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-6xl"
+            >
+                Dołóż swoją iskrę.
+            </h2>
+            <p
+                data-reveal
+                style="--reveal-delay:80ms"
+                class="max-w-xl text-lg text-pretty text-(--tone-muted)"
+            >
+                Dołącz do zespołu albo zostań partnerem technologicznym.
+                Najlepsze projekty zaczynają się od ludzi, którzy chcą zrobić
+                pierwszy krok.
+            </p>
+            <div
+                data-reveal
+                style="--reveal-delay:160ms"
+                class="mt-2 flex flex-wrap items-center gap-4"
+            >
+                <Button href="/contact" variant="primary">
+                    Dołącz do koła
+                </Button>
+                <Button href="/partners" variant="secondary">
+                    Porozmawiajmy o współpracy
+                </Button>
+            </div>
+        </div>
+    </Section>
 </Layout>
+
+<script>
+    // Przełącznik podstaw. Bez JS-u widać po prostu wariant kołowy.
+    const stage = document.getElementById("robot-stage");
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-base]");
+
+    if (stage && buttons.length) {
+        // Wariant startowy bierzemy z markupu, a nie z literału — pierwsza podstawa
+        // wynika z kolejności plików w kolekcji i może się zmienić.
+        const initial = stage.dataset.module ?? "wheels";
+
+        const select = (module: string) => {
+            stage.dataset.module = module;
+            buttons.forEach((button) =>
+                button.setAttribute(
+                    "aria-pressed",
+                    String(button.dataset.base === module),
+                ),
+            );
+        };
+
+        buttons.forEach((button) =>
+            button.addEventListener("click", () =>
+                select(button.dataset.base ?? initial),
+            ),
+        );
+
+        select(initial);
+    }
+</script>

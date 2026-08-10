@@ -1,0 +1,18 @@
+# Strona jest w budowie (WIP) i nie ma pojawiać się w wynikach wyszukiwania.
+#
+# Blokada NIE siedzi tutaj, tylko w <meta name="robots" content="noindex, nofollow">
+# wstawianym na każdej podstronie — przełącznik `INDEXABLE` w src/data/site.ts.
+#
+# Dlaczego nie `Disallow: /`:
+# robots.txt steruje POBIERANIEM strony, nie jej indeksowaniem. Zablokowany adres
+# potrafi mimo wszystko trafić do Google (jako goły URL, bez tytułu i opisu), jeśli
+# ktoś do niego zalinkuje. Co gorsza, robot nie pobierze wtedy strony, więc nie
+# zobaczy `noindex` i nie będzie miał jak jej z indeksu usunąć.
+# Dlatego crawlery muszą tu wejść — po to, żeby zobaczyć zakaz indeksowania.
+#
+# PRZED PREMIERĄ: `INDEXABLE = true` w src/data/site.ts. Tego pliku nie trzeba ruszać.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://roboforgepp.github.io/sitemap-index.xml

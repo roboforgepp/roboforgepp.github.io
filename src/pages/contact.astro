@@ -1,12 +1,215 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import SocialIcon from "../components/ui/SocialIcon.astro";
+import { CONTACTS, SOCIALS } from "../data/site";
+
+const mainEmail = CONTACTS[0].email;
+
+const topics = [
+    { value: "Dołączam do koła", label: "Chcę dołączyć do koła" },
+    { value: "Współpraca", label: "Współpraca / partnerstwo" },
+    { value: "Media", label: "Media i wydarzenia" },
+    { value: "Inne", label: "Coś innego" },
+];
 ---
 
-<Layout>
-  <section class="py-16">
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Kontakt</h1>
-    <p class="mt-4 max-w-2xl text-lg text-gray-600">
-      Jesteś zainteresowany współpracą z nami? Napisz do nas!
-    </p>
-  </section>
+<Layout
+    title="Kontakt"
+    description="Napisz do koła naukowego RoboForge — rekrutacja, współpraca z firmami, media. Adresy mailowe i formularz kontaktowy."
+>
+    <PageHeader
+        eyebrow="Odezwij się"
+        title="Napisz do kuźni"
+        description="Chcesz dołączyć, nawiązać współpracę albo po prostu zapytać, co budujemy? Odpowiadamy na maile — najczęściej w kilka dni."
+    />
+
+    <Section tone="white" space="default" size="wide">
+        <div class="grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
+            <div>
+                <SectionHeading
+                    eyebrow="Formularz"
+                    title="Wyślij wiadomość"
+                    description="Formularz nie wysyła nic sam — otwiera Twój program pocztowy z gotową treścią. Dzięki temu masz kopię wiadomości u siebie w wysłanych."
+                />
+
+                <!--
+                  Bez backendu (§3.2): formularz składa `mailto:` z pól i otwiera
+                  klienta pocztowego. Walidacja jest natywna, HTML-owa.
+                -->
+                <form
+                    id="contact-form"
+                    data-mailto={mainEmail}
+                    class="mt-8 grid gap-5 sm:grid-cols-2"
+                >
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="name"
+                            class="text-sm font-medium text-gray-700"
+                            >Imię i nazwisko</label
+                        >
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            required
+                            autocomplete="name"
+                            class="rounded-md border border-gray-300 px-4 py-2.5 transition-colors focus:border-brand-500"
+                        />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="email"
+                            class="text-sm font-medium text-gray-700"
+                            >Twój e-mail</label
+                        >
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            autocomplete="email"
+                            class="rounded-md border border-gray-300 px-4 py-2.5 transition-colors focus:border-brand-500"
+                        />
+                    </div>
+
+                    <div class="flex flex-col gap-2 sm:col-span-2">
+                        <label
+                            for="topic"
+                            class="text-sm font-medium text-gray-700">Temat</label
+                        >
+                        <select
+                            id="topic"
+                            name="topic"
+                            class="rounded-md border border-gray-300 bg-white px-4 py-2.5 transition-colors focus:border-brand-500"
+                        >
+                            {
+                                topics.map((topic) => (
+                                    <option value={topic.value}>
+                                        {topic.label}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2 sm:col-span-2">
+                        <label
+                            for="message"
+                            class="text-sm font-medium text-gray-700"
+                            >Wiadomość</label
+                        >
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="6"
+                            required
+                            class="rounded-md border border-gray-300 px-4 py-2.5 transition-colors focus:border-brand-500"
+                        ></textarea>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4 sm:col-span-2">
+                        <button
+                            type="submit"
+                            class="inline-flex items-center gap-2 rounded-md bg-brand-600 px-6 py-3 font-medium text-white transition-colors hover:bg-brand-700"
+                        >
+                            Przygotuj wiadomość
+                            <span aria-hidden="true">→</span>
+                        </button>
+                        <p
+                            id="form-message"
+                            role="status"
+                            class="text-sm text-gray-500"
+                        >
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="lg:border-l lg:border-gray-200 lg:pl-8">
+                <p class="text-xs tracking-widest text-gray-400 uppercase">
+                    Napisz bezpośrednio
+                </p>
+                <ul class="mt-4 flex flex-col gap-5">
+                    {
+                        CONTACTS.map((contact) => (
+                            <li>
+                                <p class="font-medium text-gray-900">
+                                    {contact.label}
+                                </p>
+                                <p class="text-sm text-gray-500">
+                                    {contact.role}
+                                </p>
+                                <a
+                                    href={`mailto:${contact.email}`}
+                                    class="mt-1 inline-block text-sm font-medium break-all text-brand-600 hover:text-brand-700"
+                                >
+                                    {contact.email}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <p class="text-xs tracking-widest text-gray-400 uppercase">
+                        Znajdź nas
+                    </p>
+                    <div class="mt-3 flex flex-wrap items-center gap-1">
+                        {
+                            SOCIALS.map((social) => (
+                                <SocialIcon
+                                    href={social.href}
+                                    label={social.label}
+                                    icon={social.icon}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </Section>
 </Layout>
+
+<script>
+    const form = document.getElementById(
+        "contact-form",
+    ) as HTMLFormElement | null;
+    const status = document.getElementById("form-message");
+
+    const LABELS: Record<string, string> = {
+        name: "Imię i nazwisko",
+        email: "E-mail",
+        topic: "Temat",
+        message: "Wiadomość",
+    };
+
+    form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        const data = new FormData(form);
+        const target = form.dataset.mailto ?? "roboforgepp@gmail.com";
+        const topic = String(data.get("topic") ?? "Wiadomość ze strony");
+
+        const lines: string[] = [];
+        for (const [key, value] of data.entries()) {
+            const clean = String(value).trim();
+            if (clean) lines.push(`${LABELS[key] ?? key}: ${clean}`);
+        }
+        lines.push("", "Wiadomość przygotowana przez formularz na roboforgepp.pl.");
+
+        if (status) {
+            status.textContent =
+                "Otwieramy program pocztowy z gotową wiadomością.";
+        }
+
+        window.location.href = `mailto:${target}?subject=${encodeURIComponent(
+            `RoboForge — ${topic}`,
+        )}&body=${encodeURIComponent(lines.join("\n"))}`;
+    });
+</script>

@@ -1,0 +1,148 @@
+---
+/**
+ * Modułowa platforma: wspólny rdzeń + wymienna podstawa (kołowa, krocząca,
+ * gąsienicowa) i nadstawa na górze.
+ *
+ * `module` można ustawić statycznie propem albo z zewnątrz — komponent czyta
+ * `data-module` z siebie, więc przełącznik na stronie głównej po prostu
+ * nadpisuje ten atrybut.
+ */
+interface Props {
+    module?: "wheels" | "legs" | "tracks";
+    id?: string;
+    class?: string;
+}
+
+const { module = "wheels", id, class: className = "" } = Astro.props;
+
+const base = "absolute left-1/2 -translate-x-1/2 transition-all duration-600 ease-forge";
+const wheelFace =
+    "aspect-square rounded-full border-[3px] border-brand-600 bg-[repeating-radial-gradient(circle,transparent_0_13px,rgba(0,102,255,.14)_14px_17px)] shadow-[0_0_26px_rgba(0,102,255,.18)]";
+// Nogi mierzone w procentach wysokości platformy — inaczej wystają poza scenę w wąskiej karcie.
+const legFace = "absolute top-0 h-full w-[42%] origin-top border-t-4 border-r-4 border-brand-600";
+---
+
+<div
+    id={id}
+    data-module={module}
+    aria-hidden="true"
+    class:list={["group/robot absolute inset-0 grid place-items-center", className]}
+>
+    <!-- Orbity -->
+    <div
+        class="absolute aspect-square w-[74%] rounded-full border border-brand-600/25"
+    >
+        <div
+            class="absolute inset-[14%] animate-rotate-ring rounded-full border border-dashed border-white/12"
+        >
+        </div>
+        <div
+            class="absolute inset-[31%] animate-rotate-ring-fast rounded-full border border-dashed border-brand-600/40"
+        >
+        </div>
+    </div>
+
+    <!-- Cień pod platformą -->
+    <div
+        class="absolute inset-x-[10%] bottom-[10%] h-[14%] bg-[radial-gradient(ellipse,rgba(0,0,0,.72),transparent_70%)] blur-lg"
+    >
+    </div>
+
+    <div class="relative z-2 aspect-[1.12/1] w-[72%] max-w-[26rem]">
+        <!-- Nadstawa -->
+        <div
+            class:list={[
+                base,
+                "top-[8%] h-[19%] w-[44%] rounded-t-[15px] rounded-b-[8px] border-2 border-white/60 bg-white/5",
+            ]}
+        >
+            <span
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-extrabold tracking-[0.18em] text-white/55"
+                >NADSTAWA</span
+            >
+        </div>
+
+        <!-- Rdzeń -->
+        <div
+            class:list={[
+                base,
+                "top-[25%] h-[31%] w-[58%] rounded-[22px] border-2 border-brand-600 bg-linear-[145deg,rgba(0,102,255,.32),rgba(0,102,255,.05)] shadow-[0_0_48px_rgba(0,102,255,.18),inset_0_0_22px_rgba(0,102,255,.15)]",
+            ]}
+        >
+            <span
+                class="absolute top-4 left-5 text-[12px] font-black tracking-[0.16em] text-white/70"
+                >RF-01</span
+            >
+            <span
+                class="absolute top-1/2 right-6 h-[11px] w-[11px] rounded-full bg-brand-600 shadow-[0_0_18px_var(--color-brand-600),-25px_0_0_rgba(255,255,255,.25)]"
+            ></span>
+        </div>
+
+        <!-- Podstawa kołowa -->
+        <div
+            class:list={[
+                base,
+                "top-[56%] flex w-[68%] justify-between opacity-0 group-data-[module=wheels]/robot:opacity-100",
+            ]}
+        >
+            <span class:list={[wheelFace, "w-[28%]"]}></span>
+            <span class:list={[wheelFace, "w-[28%]"]}></span>
+        </div>
+
+        <!-- Podstawa krocząca -->
+        <div
+            class:list={[
+                base,
+                "top-[55%] h-[42%] w-[78%] opacity-0 group-data-[module=legs]/robot:opacity-100",
+            ]}
+        >
+            <span
+                class:list={[legFace, "left-[4%] [transform:rotate(16deg)_skewX(-12deg)]"]}
+            ></span>
+            <span
+                class:list={[legFace, "left-[27%] [transform:rotate(8deg)_skewX(-8deg)]"]}
+            ></span>
+            <span
+                class:list={[
+                    legFace,
+                    "right-[27%] [transform:scaleX(-1)_rotate(8deg)_skewX(-8deg)]",
+                ]}
+            ></span>
+            <span
+                class:list={[
+                    legFace,
+                    "right-[4%] [transform:scaleX(-1)_rotate(16deg)_skewX(-12deg)]",
+                ]}
+            ></span>
+        </div>
+
+        <!-- Podstawa gąsienicowa (D3) -->
+        <div
+            class:list={[
+                base,
+                "top-[56%] flex h-[22%] w-[86%] items-center justify-between opacity-0 group-data-[module=tracks]/robot:opacity-100",
+            ]}
+        >
+            <div
+                class="relative flex h-full w-[46%] items-center justify-between rounded-full border-[3px] border-brand-600 bg-[repeating-linear-gradient(115deg,rgba(0,102,255,.28)_0_6px,transparent_6px_13px)] px-[6px] shadow-[0_0_26px_rgba(0,102,255,.18)]"
+            >
+                <span
+                    class="aspect-square h-[62%] rounded-full border-2 border-brand-600/70"
+                ></span>
+                <span
+                    class="aspect-square h-[62%] rounded-full border-2 border-brand-600/70"
+                ></span>
+            </div>
+            <div
+                class="relative flex h-full w-[46%] items-center justify-between rounded-full border-[3px] border-brand-600 bg-[repeating-linear-gradient(115deg,rgba(0,102,255,.28)_0_6px,transparent_6px_13px)] px-[6px] shadow-[0_0_26px_rgba(0,102,255,.18)]"
+            >
+                <span
+                    class="aspect-square h-[62%] rounded-full border-2 border-brand-600/70"
+                ></span>
+                <span
+                    class="aspect-square h-[62%] rounded-full border-2 border-brand-600/70"
+                ></span>
+            </div>
+        </div>
+    </div>
+</div>

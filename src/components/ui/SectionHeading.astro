@@ -1,0 +1,81 @@
+---
+/**
+ * Nagłówek sekcji — zawsze `<h2>`; `<h1>` należy do `PageHeader`.
+ * `href` i `cta` są opcjonalne, więc sekcja bez przycisku jest możliwa
+ * (poprzedni `Section.astro` wymagał obu).
+ */
+interface Props {
+    eyebrow?: string;
+    title: string;
+    description?: string;
+    href?: string;
+    cta?: string;
+    size?: "default" | "large";
+    align?: "start" | "center";
+    class?: string;
+}
+
+const {
+    eyebrow,
+    title,
+    description,
+    href,
+    cta,
+    size = "default",
+    align = "start",
+    class: className = "",
+} = Astro.props;
+
+const TITLE_SIZE =
+    size === "large" ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl";
+---
+
+<div
+    data-reveal
+    class:list={[
+        "flex flex-col gap-4",
+        align === "center" ? "items-center text-center" : "items-start",
+        className,
+    ]}
+>
+    {
+        eyebrow && (
+            <p class="flex items-center gap-2 text-sm font-semibold tracking-widest text-brand-600 uppercase">
+                <span class="h-px w-6 bg-brand-600" aria-hidden="true" />
+                {eyebrow}
+            </p>
+        )
+    }
+    <h2
+        class:list={[
+            "font-bold tracking-tight text-balance text-(--tone-fg)",
+            TITLE_SIZE,
+        ]}
+    >
+        {title}
+    </h2>
+    {
+        description && (
+            <p class="max-w-2xl text-lg text-pretty text-(--tone-muted)">
+                {description}
+            </p>
+        )
+    }
+    <slot />
+    {
+        href && cta && (
+            <a
+                href={href}
+                class="group inline-flex items-center gap-1.5 font-medium text-brand-600 hover:text-brand-700"
+            >
+                {cta}
+                <span
+                    aria-hidden="true"
+                    class="transition-transform duration-200 ease-forge group-hover:translate-x-1"
+                >
+                    →
+                </span>
+            </a>
+        )
+    }
+</div>

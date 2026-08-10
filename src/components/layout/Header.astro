@@ -1,0 +1,148 @@
+---
+import robokop from "../../assets/robokop_np_N.svg";
+import Container from "./Container.astro";
+import { NAV_LINKS } from "../../data/site";
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isActive = (href: string) =>
+    currentPath === href || currentPath.startsWith(`${href}/`);
+---
+
+<header
+    class="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-md"
+>
+    <Container size="wide" class="flex h-20 items-center justify-between gap-4">
+        <a
+            href="/"
+            class="flex items-center py-3"
+            aria-label="RoboForge — strona główna"
+        >
+            <img
+                src={robokop.src}
+                alt="RoboForge"
+                class="h-10 w-auto sm:h-12"
+                width="180"
+                height="60"
+            />
+        </a>
+
+        <!-- Desktop -->
+        <nav class="hidden items-center gap-8 lg:flex" aria-label="Nawigacja główna">
+            {
+                NAV_LINKS.map((link) => (
+                    <a
+                        href={link.href}
+                        aria-current={isActive(link.href) ? "page" : undefined}
+                        class:list={[
+                            "flex h-20 items-center border-b-2 font-medium transition-colors",
+                            isActive(link.href)
+                                ? "border-brand-600 text-brand-600"
+                                : "border-transparent text-gray-600 hover:border-brand-300 hover:text-brand-600",
+                        ]}
+                    >
+                        {link.label}
+                    </a>
+                ))
+            }
+        </nav>
+
+        <!-- Mobile (B4) -->
+        <button
+            type="button"
+            id="nav-toggle"
+            class="flex h-11 w-11 items-center justify-center rounded-md border border-gray-300 text-gray-700 transition-colors hover:border-brand-400 hover:text-brand-600 lg:hidden"
+            aria-label="Otwórz menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                class="h-6 w-6"
+                aria-hidden="true"
+                data-icon="open"
+            >
+                <line x1="3" y1="7" x2="21" y2="7"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="17" x2="21" y2="17"></line>
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                class="hidden h-6 w-6"
+                aria-hidden="true"
+                data-icon="close"
+            >
+                <line x1="5" y1="5" x2="19" y2="19"></line>
+                <line x1="19" y1="5" x2="5" y2="19"></line>
+            </svg>
+        </button>
+    </Container>
+
+    <nav
+        id="mobile-nav"
+        class="hidden border-t border-gray-200 bg-white lg:hidden"
+        aria-label="Nawigacja mobilna"
+    >
+        <Container size="wide" class="flex flex-col py-2">
+            {
+                NAV_LINKS.map((link) => (
+                    <a
+                        href={link.href}
+                        aria-current={isActive(link.href) ? "page" : undefined}
+                        class:list={[
+                            "border-b border-gray-100 py-4 text-lg font-medium transition-colors last:border-b-0",
+                            isActive(link.href)
+                                ? "text-brand-600"
+                                : "text-gray-700 hover:text-brand-600",
+                        ]}
+                    >
+                        {link.label}
+                    </a>
+                ))
+            }
+        </Container>
+    </nav>
+</header>
+
+<script>
+    const toggle = document.getElementById("nav-toggle");
+    const panel = document.getElementById("mobile-nav");
+
+    if (toggle && panel) {
+        const iconOpen = toggle.querySelector('[data-icon="open"]');
+        const iconClose = toggle.querySelector('[data-icon="close"]');
+
+        const setOpen = (open: boolean) => {
+            panel.classList.toggle("hidden", !open);
+            iconOpen?.classList.toggle("hidden", open);
+            iconClose?.classList.toggle("hidden", !open);
+            toggle.setAttribute("aria-expanded", String(open));
+            toggle.setAttribute(
+                "aria-label",
+                open ? "Zamknij menu" : "Otwórz menu",
+            );
+        };
+
+        toggle.addEventListener("click", () =>
+            setOpen(toggle.getAttribute("aria-expanded") !== "true"),
+        );
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setOpen(false);
+        });
+
+        // Powrót na desktop przy otwartym panelu zostawiał go widocznym pod nagłówkiem.
+        window.matchMedia("(min-width: 64rem)").addEventListener("change", (e) => {
+            if (e.matches) setOpen(false);
+        });
+    }
+</script>

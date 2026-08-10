@@ -1,0 +1,27 @@
+---
+/** Tiara Przydziału: sylwetka kapelusza i przesuwający się „odczyt". */
+interface Props {
+    class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<div
+    aria-hidden="true"
+    class:list={["absolute inset-0 grid place-items-center", className]}
+>
+    <div class="relative aspect-square w-[60%] max-w-[19rem]">
+        <div
+            class="absolute top-[13%] left-1/2 h-[54%] w-[46%] -translate-x-1/2 -rotate-[4deg] rounded-[50%_50%_32%_32%/28%_28%_62%_62%] border-[3px] border-brand-600 shadow-[0_0_45px_rgba(0,102,255,.2)]"
+        >
+        </div>
+        <div
+            class="absolute inset-x-[12%] bottom-[20%] h-[18%] -rotate-[4deg] rounded-[50%] border-[3px] border-brand-600"
+        >
+        </div>
+        <div
+            class="absolute top-[4%] left-1/2 h-[90%] w-0.5 animate-sweep bg-linear-to-b from-transparent via-brand-600 to-transparent shadow-[0_0_18px_var(--color-brand-600)]"
+        >
+        </div>
+    </div>
+</div>

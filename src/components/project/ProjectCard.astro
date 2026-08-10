@@ -1,0 +1,45 @@
+---
+import ProjectVisual from "../visuals/ProjectVisual.astro";
+import ProjectStatus from "./ProjectStatus.astro";
+import type { Project } from "../../lib/projects";
+
+interface Props {
+    project: Project;
+    class?: string;
+}
+
+const { project, class: className = "" } = Astro.props;
+const { data } = project;
+---
+
+<a
+    href={`/projects/${project.id}`}
+    data-reveal
+    class:list={[
+        "group flex flex-col overflow-hidden rounded-card border border-(--tone-line) bg-(--tone-surface) transition-all duration-300 ease-forge hover:-translate-y-1 hover:border-brand-400 hover:shadow-lg hover:shadow-brand-600/10",
+        className,
+    ]}
+>
+    <ProjectVisual
+        visual={data.visual}
+        cover={data.cover}
+        coverAlt={data.coverAlt}
+        class="aspect-[4/3] w-full"
+    />
+
+    <div class="flex flex-1 flex-col gap-3 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <span
+                class="text-xs font-semibold tracking-[0.14em] text-(--tone-faint) uppercase"
+                >{data.category}</span
+            >
+            <ProjectStatus status={data.status} placeholder={data.placeholder} />
+        </div>
+        <h3
+            class="text-xl font-semibold text-(--tone-fg) transition-colors group-hover:text-brand-600"
+        >
+            {data.title}
+        </h3>
+        <p class="text-sm text-pretty text-(--tone-muted)">{data.summary}</p>
+    </div>
+</a>
