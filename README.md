@@ -43,12 +43,12 @@ jednej linii, którą da się edytować bezpośrednio na github.com, bez klonowa
 
 Pozostałe miejsca na treść:
 
-| Co                                        | Gdzie                        |
-|-------------------------------------------|------------------------------|
-| Nawigacja, maile kontaktowe, sociale      | `src/data/site.ts`           |
-| Sekcje koła i przewodniczący              | `src/data/site.ts`           |
-| Paleta kolorów, czcionka, animacje        | `src/styles/global.css`      |
-| Pliki do pobrania (STEP, PDF)             | `public/downloads/`          |
+| Co                                   | Gdzie                   |
+|--------------------------------------|-------------------------|
+| Nawigacja, maile kontaktowe, sociale | `src/data/site.ts`      |
+| Sekcje koła i przewodniczący         | `src/data/site.ts`      |
+| Paleta kolorów, czcionka, animacje   | `src/styles/global.css` |
+| Pliki do pobrania (STEP, PDF)        | `public/downloads/`     |
 
 # Deploy
 
