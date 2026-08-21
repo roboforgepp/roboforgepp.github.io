@@ -59,7 +59,7 @@ export const CONTACTS = [
     },
     {
         label: "Bartosz Zawłocki",
-        role: "Konstrukcja i dokumentacja techniczna",
+        role: "Wice Kowal Master — wiceprezes koła",
         email: "bartosz.zawlocki@student.put.poznan.pl",
     },
 ] as const;
@@ -108,8 +108,14 @@ export const TEAM_SECTIONS = [
     {
         name: "Kowal Master",
         description:
-            "Zarząd koła. Wyznacza kierunek, pilnuje harmonogramu i reprezentuje RoboForge na zewnątrz.",
+            "Zarządca koła. Wyznacza kierunek, pilnuje harmonogramu i reprezentuje RoboForge na zewnątrz.",
         leaderName: "Antoni Tomczak",
+    },
+     {
+        name: "Wice Kowal Master",
+        description:
+            "Wice zarządca koła. Wyznacza kierunek, pilnuje harmonogramu i reprezentuje RoboForge na zewnątrz.",
+        leaderName: "Bartosz Zawłocki",
     },
     {
         name: "Kowale mechanicy",
