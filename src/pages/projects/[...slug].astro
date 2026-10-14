@@ -48,7 +48,7 @@ const dateLabel = data.date.toLocaleDateString("pl-PL", {
     >
         <div
             aria-hidden="true"
-            class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,102,255,.2),transparent_65%)] blur-3xl"
+            class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-144 w-xl -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,102,255,.2),transparent_65%)] blur-3xl"
         >
         </div>
 
@@ -59,7 +59,12 @@ const dateLabel = data.date.toLocaleDateString("pl-PL", {
                 <span class="text-white/80">{data.category}</span>
             </nav>
 
-            <div class="mt-8 grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+            <div
+                class:list={[
+                    "mt-8 grid gap-10 lg:items-center",
+                    data.showVisual && "lg:grid-cols-[1.1fr_1fr]",
+                ]}
+            >
                 <div>
                     <ProjectStatus
                         status={data.status}
@@ -88,14 +93,18 @@ const dateLabel = data.date.toLocaleDateString("pl-PL", {
                     }
                 </div>
 
-                <ProjectVisual
-                    visual={data.visual}
-                    cover={data.cover}
-                    coverAlt={data.coverAlt}
-                    loading="eager"
-                    label={data.cover ? undefined : "Wizualizacja poglądowa"}
-                    class="aspect-[16/11] w-full rounded-card border border-white/10"
-                />
+                {
+                    data.showVisual && (
+                        <ProjectVisual
+                            visual={data.visual}
+                            cover={data.cover}
+                            coverAlt={data.coverAlt}
+                            loading="eager"
+                            label={data.cover ? undefined : "Wizualizacja poglądowa"}
+                            class="aspect-16/11 w-full rounded-card border border-white/10"
+                        />
+                    )
+                }
             </div>
         </Container>
     </section>

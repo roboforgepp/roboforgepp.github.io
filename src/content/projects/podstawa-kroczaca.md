@@ -11,9 +11,10 @@ tags:
   - serwomechanizmy
   - chód statyczny
 visual: robot-legs
+showVisual: false
 downloads: []
 placeholder: true
-draft: false
+draft: true
 ---
 
 ## Co to jest

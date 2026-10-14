@@ -30,6 +30,23 @@ const usedStatuses = STATUS_ORDER.filter((status) =>
         description="Nie budujemy jednego robota. Budujemy system, z którego może powstać wiele maszyn — wspólny rdzeń, wymienne podstawy i nadstawy dobierane do zadania."
     />
 
+    <!-- Hasło dla studentów, na samej górze — sekcja "Masz pomysł?" niżej jest skierowana do firm. -->
+    <Section tone="paper" space="tight" size="wide">
+        <div
+            class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+            <div>
+                <p class="text-lg font-semibold text-(--tone-fg)">
+                    Masz pomysł na projekt?
+                </p>
+                <p class="text-(--tone-muted)">
+                    Dołącz do nas i zbuduj go razem z kuźnią.
+                </p>
+            </div>
+            <Button href="/contact" variant="primary">Dołącz do nas</Button>
+        </div>
+    </Section>
+
     <Section size="wide" space="default">
         <div
             class="flex flex-wrap items-center gap-2"

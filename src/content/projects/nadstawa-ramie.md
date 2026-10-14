@@ -13,7 +13,7 @@ tags:
 visual: arm
 downloads: []
 placeholder: true
-draft: false
+draft: true
 ---
 
 ## Co to jest

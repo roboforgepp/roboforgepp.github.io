@@ -12,6 +12,7 @@ tags:
   - architektura systemu
   - zasilanie
 visual: robot
+showVisual: false
 downloads: []
 placeholder: true
 draft: false

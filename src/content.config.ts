@@ -43,6 +43,7 @@ const projects = defineCollection({
       visual: z.enum(PROJECT_VISUALS).default('robot'),
       cover: image().optional(),                  // render/zdjęcie — nadpisuje `visual`
       coverAlt: z.string().default(''),
+      showVisual: z.boolean().default(true),       // false = projekt bez żadnej grafiki (ani cover, ani wizualizacji)
       downloads: z
         .array(z.object({ label: z.string(), href: z.string() }))
         .default([]),
