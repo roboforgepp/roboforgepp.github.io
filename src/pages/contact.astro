@@ -193,7 +193,7 @@ const topics = [
         if (!form.reportValidity()) return;
 
         const data = new FormData(form);
-        const target = form.dataset.mailto ?? "roboforgepp@gmail.com";
+        const target = form.dataset.mailto ?? "kontakt@roboforgepp.pl";
         const topic = String(data.get("topic") ?? "Wiadomość ze strony");
 
         const lines: string[] = [];
