@@ -13,7 +13,7 @@ tags:
 visual: ui
 downloads: []
 placeholder: true
-draft: false
+draft: true
 ---
 
 ## Co to jest

@@ -20,12 +20,16 @@ const { data } = project;
         className,
     ]}
 >
-    <ProjectVisual
-        visual={data.visual}
-        cover={data.cover}
-        coverAlt={data.coverAlt}
-        class="aspect-[4/3] w-full"
-    />
+    {
+        data.showVisual && (
+            <ProjectVisual
+                visual={data.visual}
+                cover={data.cover}
+                coverAlt={data.coverAlt}
+                class="aspect-4/3 w-full"
+            />
+        )
+    }
 
     <div class="flex flex-1 flex-col gap-3 p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">

@@ -2,9 +2,10 @@
 name: MabRobotics
 summary: Producent napędów i sterowników do robotyki. Wsparcie merytoryczne tam, gdzie kończy się nasze doświadczenie z aktuatorami.
 url: https://mabrobotics.pl
+logo: ../../assets/sponsors/mabrobotics-logo.png
 order: 20
 confirmed: true
-placeholder: true
+placeholder: false
 ---
 
 MabRobotics dzieli się z nami wiedzą o doborze napędów i sterowaniu silnikami —

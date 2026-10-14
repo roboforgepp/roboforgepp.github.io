@@ -41,20 +41,26 @@ export const STATUS_ORDER: ProjectStatus[] = [
   'wstrzymany',
 ];
 
-/** Wszystkie projekty poza szkicami, w kolejności ustawionej polem `order`. */
+/** Wszystkie projekty poza szkicami, w kolejności ustawionej polem `order`.
+ *  Treść robocza (`placeholder: true`) zjeżdża na koniec listy. */
 export async function getPublishedProjects(): Promise<Project[]> {
   const all = await getCollection('projects', ({ data }) => !data.draft);
   return all.sort(
-    (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pl'),
+    (a, b) =>
+      Number(a.data.placeholder) - Number(b.data.placeholder) ||
+      a.data.order - b.data.order ||
+      a.data.title.localeCompare(b.data.title, 'pl'),
   );
 }
 
-/** Trzy najnowsze na stronę główną: przypięte najpierw, potem po dacie malejąco. */
+/** Trzy najnowsze na stronę główną: przypięte najpierw, potem po dacie malejąco.
+ *  Treść robocza (`placeholder: true`) zjeżdża na koniec. */
 export async function getLatestProjects(limit = 3): Promise<Project[]> {
   const all = await getCollection('projects', ({ data }) => !data.draft);
   return all
     .sort(
       (a, b) =>
+        Number(a.data.placeholder) - Number(b.data.placeholder) ||
         Number(b.data.featured) - Number(a.data.featured) ||
         b.data.date.getTime() - a.data.date.getTime(),
     )

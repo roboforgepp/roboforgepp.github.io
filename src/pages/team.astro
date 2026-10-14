@@ -4,7 +4,6 @@ import PageHeader from "../components/ui/PageHeader.astro";
 import Section from "../components/ui/Section.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
-import PlaceholderBox from "../components/ui/PlaceholderBox.astro";
 import TeamSection from "../components/team/TeamSection.astro";
 import { TEAM_SECTIONS } from "../data/site";
 ---
@@ -20,19 +19,12 @@ import { TEAM_SECTIONS } from "../data/site";
     />
 
     <Section tone="white" space="default" size="wide">
-        <div class="grid gap-10 sm:grid-cols-2 sm:items-center">
-            <SectionHeading
-                eyebrow="Kim jesteśmy"
-                title="Koło, które uczy się na realnych konstrukcjach"
-                description="Zaczynamy od pomysłu, kończymy na czymś, co da się uruchomić, zmierzyć i poprawić. Nie ma tu podziału na tych, którzy projektują, i tych, którzy skręcają — każdy przechodzi całą drogę."
-            />
-            <div data-reveal>
-                <PlaceholderBox
-                    label="Zdjęcie zespołu"
-                    awaiting="Dominik / sekcja promocji"
-                />
-            </div>
-        </div>
+        <SectionHeading
+            eyebrow="Kim jesteśmy"
+            title="Koło, które uczy się na realnych konstrukcjach"
+            description="Zaczynamy od pomysłu, kończymy na czymś, co da się uruchomić, zmierzyć i poprawić. Nie ma tu podziału na tych, którzy projektują, i tych, którzy skręcają — każdy przechodzi całą drogę."
+            class="max-w-2xl"
+        />
     </Section>
 
     <Section tone="paper" space="default" size="wide">

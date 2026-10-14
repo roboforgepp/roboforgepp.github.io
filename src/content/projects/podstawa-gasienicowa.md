@@ -11,9 +11,10 @@ tags:
   - teren nieutwardzony
   - zawieszenie
 visual: robot-tracks
+showVisual: false
 downloads: []
 placeholder: true
-draft: false
+draft: true
 ---
 
 ## Co to jest

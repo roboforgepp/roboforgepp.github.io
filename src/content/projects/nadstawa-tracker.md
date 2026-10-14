@@ -13,7 +13,7 @@ tags:
 visual: lidar
 downloads: []
 placeholder: true
-draft: false
+draft: true
 ---
 
 ## Co to jest

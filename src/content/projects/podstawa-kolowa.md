@@ -11,6 +11,7 @@ tags:
   - druk 3D
   - sterowanie silnikami
 visual: robot
+showVisual: false
 downloads: []
 placeholder: true
 draft: false

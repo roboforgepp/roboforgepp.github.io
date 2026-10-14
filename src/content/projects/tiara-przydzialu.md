@@ -11,8 +11,10 @@ tags:
   - audio
   - projekt pokazowy
 visual: hat
+cover: ../../assets/projects/tiara.jpg
+coverAlt: Granatowa ilustracja Tiary Przydziału — kapelusz przydziału z logo RoboForge
 downloads: []
-placeholder: true
+placeholder: false
 draft: false
 ---
 
@@ -31,5 +33,4 @@ jest na tyle lekka, żeby dało się ją nosić przez cały pokaz.
 
 ## Status prac
 
-Projekt ukończony. Czekamy na zdjęcia i materiał wideo z pokazu, żeby zastąpić nimi
-grafikę zastępczą na tej stronie.
+Projekt ukończony.
