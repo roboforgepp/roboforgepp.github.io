@@ -10,8 +10,8 @@ import type { CollectionEntry } from "astro:content";
  * Wspólne dla kafelków na /partners i ściany logotypów na stronie głównej.
  */
 interface Props {
-    partner: CollectionEntry<"partners">;
-    class?: string;
+  partner: CollectionEntry<"partners">;
+  class?: string;
 }
 
 const { partner, class: className = "" } = Astro.props;
@@ -19,24 +19,20 @@ const { data } = partner;
 ---
 
 <div
-    class:list={[
-        "flex w-full items-center justify-center rounded-md bg-gray-50 px-4",
-        className,
-    ]}
+  class:list={[
+    "flex w-full items-center justify-center rounded-md bg-gray-50 px-4",
+    className,
+  ]}
 >
-    {
-        data.logo ? (
-            <Image
-                src={data.logo}
-                alt={data.name}
-                class="max-h-12 w-auto object-contain"
-            />
-        ) : (
-            <span
-                class="text-center text-lg font-bold tracking-wide text-gray-400 uppercase"
-            >
-                {data.name}
-            </span>
-        )
-    }
+  {data.logo ? (
+    <Image
+      src={data.logo}
+      alt={data.name}
+      class="max-h-12 w-auto object-contain"
+    />
+  ) : (
+    <span class="text-center text-lg font-bold tracking-wide text-gray-400 uppercase">
+      {data.name}
+    </span>
+  )}
 </div>

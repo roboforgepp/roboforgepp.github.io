@@ -37,19 +37,21 @@ const statItems = [
     titleLines={["Kujemy robota,", "którego chce", "się używać."]}
     description="Jesteśmy młodym kołem naukowym studentów Politechniki Poznańskiej. Budujemy modułową konstrukcję, którą można modyfikować pod własne potrzeby — od podstawy jezdnej po osprzęt na górze."
   >
-    <Button href="/projects" variant="primary">Zobacz nasze projekty</Button>
-    <Button href="/contact" variant="secondary">Dołącz do nas</Button>
+    <Button href="/projects" variant="primary">
+      Zobacz nasze projekty
+    </Button>
+    <Button href="/contact" variant="secondary">
+      Dołącz do nas
+    </Button>
     <div class="flex items-center gap-1 sm:ml-2">
-      {
-        SOCIALS.map((social) => (
-          <SocialIcon
-            href={social.href}
-            label={social.label}
-            icon={social.icon}
-            class="text-white/50 hover:bg-white/10 hover:text-white"
-          />
-        ))
-      }
+      {SOCIALS.map((social) => (
+        <SocialIcon
+          href={social.href}
+          label={social.label}
+          icon={social.icon}
+          class="text-white/50 hover:bg-white/10 hover:text-white"
+        />
+      ))}
     </div>
   </Hero>
 
@@ -61,7 +63,9 @@ const statItems = [
         alt="Plakat rekrutacyjny: Chcemy Ciebie w RoboForge! Rekrutacja do koła naukowego trwa."
         class="w-full rounded-card border border-gray-200"
       />
-      <Button href="/contact" variant="primary">Dołącz do nas</Button>
+      <Button href="/contact" variant="primary">
+        Dołącz do nas
+      </Button>
     </div>
   </Section>
 
@@ -71,10 +75,11 @@ const statItems = [
       data-reveal
       class="max-w-4xl text-3xl leading-tight font-bold tracking-tight text-balance sm:text-5xl"
     >
-      Nie budujemy jednego robota.<br />
-      <span class="text-gray-400"
-        >Budujemy system, z którego może powstać wiele maszyn.</span
-      >
+      Nie budujemy jednego robota.
+      <br />
+      <span class="text-gray-400">
+        Budujemy system, z którego może powstać wiele maszyn.
+      </span>
     </p>
   </Section>
 
@@ -93,7 +98,9 @@ const statItems = [
       description="Najnowsze z kuźni. Każdy projekt ma własną podstronę z opisem, stanem prac i plikami do pobrania."
     />
     <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {latest.map((project) => <ProjectCard project={project} />)}
+      {latest.map((project) => (
+        <ProjectCard project={project} />
+      ))}
     </div>
     <div class="mt-10" data-reveal>
       <Button href="/projects" variant="secondary">
@@ -122,7 +129,10 @@ const statItems = [
           <Button href={RADIO_EPISODE.spotifyUrl} variant="primary" external>
             Otwórz w Spotify
           </Button>
-          <Button href="/media" variant="secondary"> Media i sociale </Button>
+          <Button href="/media" variant="secondary">
+            {" "}
+            Media i sociale{" "}
+          </Button>
         </div>
       </SectionHeading>
 
@@ -134,7 +144,8 @@ const statItems = [
           height="232"
           loading="lazy"
           allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          class="block w-full border-0"></iframe>
+          class="block w-full border-0"
+        ></iframe>
       </div>
     </div>
   </Section>
@@ -163,42 +174,39 @@ const statItems = [
       description="Firmy i instytucje, dzięki którym nasze projekty wychodzą poza ekran CAD-a."
     />
     <ul data-reveal class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        partners.map((partner) =>
-          partner.data.url ? (
-            <li class="flex flex-col gap-2">
-              <a
-                href={partner.data.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block h-24 rounded-md border border-gray-200 transition-colors hover:border-brand-400"
-              >
-                <PartnerLogo partner={partner} class="h-full" />
-              </a>
-              {!partner.data.confirmed && (
-                <span class="text-center text-xs text-gray-400">
-                  w rozmowach
-                </span>
-              )}
-            </li>
-          ) : (
-            <li class="flex flex-col gap-2">
-              <PartnerLogo
-                partner={partner}
-                class="h-24 border border-gray-200"
-              />
-              {!partner.data.confirmed && (
-                <span class="text-center text-xs text-gray-400">
-                  w rozmowach
-                </span>
-              )}
-            </li>
-          ),
-        )
-      }
+      {partners.map((partner) =>
+        partner.data.url ? (
+          <li class="flex flex-col gap-2">
+            <a
+              href={partner.data.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block h-24 rounded-md border border-gray-200 transition-colors hover:border-brand-400"
+            >
+              <PartnerLogo partner={partner} class="h-full" />
+            </a>
+            {!partner.data.confirmed && (
+              <span class="text-center text-xs text-gray-400">w rozmowach</span>
+            )}
+          </li>
+        ) : (
+          <li class="flex flex-col gap-2">
+            <PartnerLogo
+              partner={partner}
+              class="h-24 border border-gray-200"
+            />
+            {!partner.data.confirmed && (
+              <span class="text-center text-xs text-gray-400">w rozmowach</span>
+            )}
+          </li>
+        ),
+      )}
     </ul>
     <div class="mt-10" data-reveal>
-      <Button href="/partners" variant="secondary"> Poznaj współpracę </Button>
+      <Button href="/partners" variant="secondary">
+        {" "}
+        Poznaj współpracę{" "}
+      </Button>
     </div>
   </Section>
 
@@ -224,7 +232,10 @@ const statItems = [
         style="--reveal-delay:160ms"
         class="mt-2 flex flex-wrap items-center gap-4"
       >
-        <Button href="/contact" variant="primary"> Dołącz do koła </Button>
+        <Button href="/contact" variant="primary">
+          {" "}
+          Dołącz do koła{" "}
+        </Button>
         <Button href="/partners" variant="secondary">
           Porozmawiajmy o współpracy
         </Button>

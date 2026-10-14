@@ -5,16 +5,14 @@ import PartnerTile from "./PartnerTile.astro";
 
 /** D6 — kafelki z logo, każdy linkuje prosto na stronę partnera w nowej karcie. */
 interface Props {
-    partners: CollectionEntry<"partners">[];
+  partners: CollectionEntry<"partners">[];
 }
 
 const { partners } = Astro.props;
 ---
 
 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {
-        partners.map((partner) => (
-            <PartnerTile partner={partner} />
-        ))
-    }
+  {partners.map((partner) => (
+    <PartnerTile partner={partner} />
+  ))}
 </div>

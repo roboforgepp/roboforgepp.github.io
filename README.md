@@ -9,11 +9,17 @@ Najważniejsza zasada: Na main lecą tylko commity które są gotowe i działaj�
 Jako że jest to js-owy framework to wymagany jest node na komputerze: [node](https://nodejs.org/en/download/current)
 
 Po clonie należy zainstalować wszystkie zależnośći
+
 ```bash
 npm install
 ```
 
+`npm install` ustawia też pre-commit hook (husky + lint-staged), który przy każdym
+commicie automatycznie odpala Prettier na zmienianych plikach — nie trzeba o tym
+pamiętać ręcznie, wcięcia zawsze wyjdą spójne.
+
 Do rozpoczęcia pracy włączamy serwer deleoperski
+
 ```bash
 npm run dev
 ```
@@ -44,7 +50,7 @@ jednej linii, którą da się edytować bezpośrednio na github.com, bez klonowa
 Pozostałe miejsca na treść:
 
 | Co                                   | Gdzie                   |
-|--------------------------------------|-------------------------|
+| ------------------------------------ | ----------------------- |
 | Nawigacja, maile kontaktowe, sociale | `src/data/site.ts`      |
 | Sekcje koła i przewodniczący         | `src/data/site.ts`      |
 | Paleta kolorów, czcionka, animacje   | `src/styles/global.css` |

@@ -9,48 +9,46 @@ import { TEAM_SECTIONS } from "../data/site";
 ---
 
 <Layout
-    title="Zespół"
-    description="Pięć sekcji koła RoboForge: zarząd, mechanicy, elektronicy, informatycy i promocja. Poznaj kowali stojących za modułową platformą robotyczną."
+  title="Zespół"
+  description="Pięć sekcji koła RoboForge: zarząd, mechanicy, elektronicy, informatycy i promocja. Poznaj kowali stojących za modułową platformą robotyczną."
 >
-    <PageHeader
-        eyebrow="Ludzie za projektem"
-        title="Poznaj naszych kowali"
-        description="RoboForge to koło interdyscyplinarne. Robot powstaje na styku mechaniki, elektroniki i oprogramowania, więc pracujemy w sekcjach, które muszą się dogadywać."
+  <PageHeader
+    eyebrow="Ludzie za projektem"
+    title="Poznaj naszych kowali"
+    description="RoboForge to koło interdyscyplinarne. Robot powstaje na styku mechaniki, elektroniki i oprogramowania, więc pracujemy w sekcjach, które muszą się dogadywać."
+  />
+
+  <Section tone="white" space="default" size="wide">
+    <SectionHeading
+      eyebrow="Kim jesteśmy"
+      title="Koło, które uczy się na realnych konstrukcjach"
+      description="Zaczynamy od pomysłu, kończymy na czymś, co da się uruchomić, zmierzyć i poprawić. Nie ma tu podziału na tych, którzy projektują, i tych, którzy skręcają — każdy przechodzi całą drogę."
+      class="max-w-2xl"
     />
+  </Section>
 
-    <Section tone="white" space="default" size="wide">
-        <SectionHeading
-            eyebrow="Kim jesteśmy"
-            title="Koło, które uczy się na realnych konstrukcjach"
-            description="Zaczynamy od pomysłu, kończymy na czymś, co da się uruchomić, zmierzyć i poprawić. Nie ma tu podziału na tych, którzy projektują, i tych, którzy skręcają — każdy przechodzi całą drogę."
-            class="max-w-2xl"
+  <Section tone="paper" space="default" size="wide">
+    <SectionHeading eyebrow="Sekcje" title="Jak dzielimy pracę" />
+    <div class="mt-8">
+      {TEAM_SECTIONS.map((section) => (
+        <TeamSection
+          name={section.name}
+          description={section.description}
+          leaderName={section.leaderName}
         />
-    </Section>
+      ))}
+    </div>
+  </Section>
 
-    <Section tone="paper" space="default" size="wide">
-        <SectionHeading eyebrow="Sekcje" title="Jak dzielimy pracę" />
-        <div class="mt-8">
-            {
-                TEAM_SECTIONS.map((section) => (
-                    <TeamSection
-                        name={section.name}
-                        description={section.description}
-                        leaderName={section.leaderName}
-                    />
-                ))
-            }
-        </div>
-    </Section>
-
-    <Section tone="ink" space="default" size="wide">
-        <SectionHeading
-            eyebrow="Rekrutacja"
-            title="Szukamy ludzi do każdej sekcji"
-            description="Nie musisz umieć wszystkiego — wystarczy, że chcesz się nauczyć i masz czas raz w tygodniu usiąść nad projektem. Reszty nauczysz się przy konstrukcji."
-        >
-            <Button href="/contact" variant="primary" class="mt-2">
-                Napisz do nas
-            </Button>
-        </SectionHeading>
-    </Section>
+  <Section tone="ink" space="default" size="wide">
+    <SectionHeading
+      eyebrow="Rekrutacja"
+      title="Szukamy ludzi do każdej sekcji"
+      description="Nie musisz umieć wszystkiego — wystarczy, że chcesz się nauczyć i masz czas raz w tygodniu usiąść nad projektem. Reszty nauczysz się przy konstrukcji."
+    >
+      <Button href="/contact" variant="primary" class="mt-2">
+        Napisz do nas
+      </Button>
+    </SectionHeading>
+  </Section>
 </Layout>

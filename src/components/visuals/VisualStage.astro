@@ -24,21 +24,17 @@ const { label, class: className = "" } = Astro.props;
   <div
     aria-hidden="true"
     class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] bg-size-[46px_46px]"
-  >
-  </div>
+  ></div>
   <div
     aria-hidden="true"
     class="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(0,102,255,.18),transparent_42%)]"
-  >
-  </div>
+  ></div>
 
   <slot />
 
-  {
-    label && (
-      <span class="absolute bottom-5 left-6 z-3 text-[10px] font-extrabold tracking-[0.18em] text-white/45 uppercase">
-        {label}
-      </span>
-    )
-  }
+  {label && (
+    <span class="absolute bottom-5 left-6 z-3 text-[10px] font-extrabold tracking-[0.18em] text-white/45 uppercase">
+      {label}
+    </span>
+  )}
 </div>

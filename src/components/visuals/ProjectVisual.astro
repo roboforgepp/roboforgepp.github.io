@@ -16,42 +16,40 @@ import type { VisualKey } from "../../lib/projects";
  * zdjęcie wygrywa i wizualizacja znika bez zmiany układu strony.
  */
 interface Props {
-    visual: VisualKey;
-    cover?: ImageMetadata;
-    coverAlt?: string;
-    label?: string;
-    /** Klasy wspólne dla zdjęcia i sceny — proporcje, zaokrąglenie, obramowanie. */
-    class?: string;
-    loading?: "lazy" | "eager";
+  visual: VisualKey;
+  cover?: ImageMetadata;
+  coverAlt?: string;
+  label?: string;
+  /** Klasy wspólne dla zdjęcia i sceny — proporcje, zaokrąglenie, obramowanie. */
+  class?: string;
+  loading?: "lazy" | "eager";
 }
 
 const {
-    visual,
-    cover,
-    coverAlt = "",
-    label,
-    class: className = "aspect-video rounded-card",
-    loading = "lazy",
+  visual,
+  cover,
+  coverAlt = "",
+  label,
+  class: className = "aspect-video rounded-card",
+  loading = "lazy",
 } = Astro.props;
 ---
 
-{
-    cover ? (
-        <Image
-            src={cover}
-            alt={coverAlt}
-            loading={loading}
-            class:list={["w-full object-cover", className]}
-        />
-    ) : (
-        <VisualStage label={label} class={className}>
-            {visual === "robot" && <RobotAssembly module="wheels" />}
-            {visual === "robot-legs" && <RobotAssembly module="legs" />}
-            {visual === "robot-tracks" && <RobotAssembly module="tracks" />}
-            {visual === "arm" && <ArmVisual />}
-            {visual === "lidar" && <LidarDiagram />}
-            {visual === "ui" && <UiVisual />}
-            {visual === "hat" && <HatVisual />}
-        </VisualStage>
-    )
-}
+{cover ? (
+  <Image
+    src={cover}
+    alt={coverAlt}
+    loading={loading}
+    class:list={["w-full object-cover", className]}
+  />
+) : (
+  <VisualStage label={label} class={className}>
+    {visual === "robot" && <RobotAssembly module="wheels" />}
+    {visual === "robot-legs" && <RobotAssembly module="legs" />}
+    {visual === "robot-tracks" && <RobotAssembly module="tracks" />}
+    {visual === "arm" && <ArmVisual />}
+    {visual === "lidar" && <LidarDiagram />}
+    {visual === "ui" && <UiVisual />}
+    {visual === "hat" && <HatVisual />}
+  </VisualStage>
+)}

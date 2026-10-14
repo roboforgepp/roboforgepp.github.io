@@ -18,30 +18,23 @@ const { eyebrow, title, description } = Astro.props;
   <div
     aria-hidden="true"
     class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-144 w-xl -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,102,255,.2),transparent_65%)] blur-3xl"
-  >
-  </div>
+  ></div>
 
   <Container size="wide" class="py-16 sm:py-20">
-    {
-      eyebrow && (
-        <p class="flex items-center gap-3 text-sm font-semibold tracking-[0.2em] text-brand-400 uppercase">
-          <span class="h-px w-8 bg-brand-500" aria-hidden="true" />
-          {eyebrow}
-        </p>
-      )
-    }
-    <h1
-      class="mt-5 max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-6xl"
-    >
+    {eyebrow && (
+      <p class="flex items-center gap-3 text-sm font-semibold tracking-[0.2em] text-brand-400 uppercase">
+        <span class="h-px w-8 bg-brand-500" aria-hidden="true" />
+        {eyebrow}
+      </p>
+    )}
+    <h1 class="mt-5 max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-6xl">
       {title}
     </h1>
-    {
-      description && (
-        <p class="mt-5 max-w-2xl text-lg text-pretty text-white/64">
-          {description}
-        </p>
-      )
-    }
+    {description && (
+      <p class="mt-5 max-w-2xl text-lg text-pretty text-white/64">
+        {description}
+      </p>
+    )}
     <slot />
   </Container>
 </section>
