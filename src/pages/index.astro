@@ -56,11 +56,17 @@ const statItems = [
   <!-- Rekrutacja: event na uczelni jest jutro, baner ma być pierwszą rzeczą po Hero. -->
   <Section tone="paper" space="default" size="wide">
     <div class="flex flex-col items-center gap-8" data-reveal>
-      <Image
-        src={recruitmentPoster}
-        alt="Plakat rekrutacyjny: Chcemy Ciebie w RoboForge! Rekrutacja do koła naukowego trwa."
-        class="w-full rounded-card border border-gray-200"
-      />
+      <a
+        href="https://docs.google.com/forms/d/1IuSPouXB4nzsWj22VV_RXs2HqrLO6P6DDFbEjMOtsAU/viewform?edit_requested=true"
+        target="_blank"
+      >
+        <Image
+          src={recruitmentPoster}
+          alt="Plakat rekrutacyjny: Chcemy Ciebie w RoboForge! Rekrutacja do koła naukowego trwa."
+          class="w-full rounded-card border border-gray-200"
+        />
+      </a>
+
       <Button href="/contact" variant="primary">Dołącz do nas</Button>
     </div>
   </Section>
