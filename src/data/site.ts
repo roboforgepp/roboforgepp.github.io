@@ -50,7 +50,7 @@ export const CONTACTS = [
     {
         label: "Kontakt ogólny",
         role: "Współpraca, patronaty, media",
-        email: "roboforgepp@gmail.com",
+        email: "kontakt@roboforgepp.pl",
     },
     {
         label: "Antoni Tomczak",
