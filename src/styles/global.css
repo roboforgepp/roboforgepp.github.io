@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Saira+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -19,8 +20,9 @@
     --color-ink-2: #11151d;
     --color-paper: #f7f8fa;
 
-    --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
-        "Segoe UI", sans-serif;
+    --font-sans: "Montserrat", sans-serif;
+    --font-display: "Saira Semi Condensed", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
 
     --ease-forge: cubic-bezier(0.22, 0.8, 0.2, 1);
     --radius-card: 18px;
@@ -98,9 +100,9 @@
 
 @layer base {
     /*
-     * Tokeny „tonu" sekcji. `Section.astro` nadpisuje je dla wariantu ciemnego,
-     * dzięki czemu ten sam Card / SectionHeading / Tag działa na jasnym i ciemnym
-     * tle bez przekazywania propa `tone` przez pół drzewa komponentów.
+- Tokeny „tonu" sekcji. `Section.astro` nadpisuje je dla wariantu ciemnego,
+- dzięki czemu ten sam Card / SectionHeading / Tag działa na jasnym i ciemnym
+- tle bez przekazywania propa `tone` przez pół drzewa komponentów.
      */
     :root {
         --tone-fg: var(--color-gray-900);
@@ -120,8 +122,36 @@
         min-width: 20rem;
         overflow-x: hidden;
         font-family: var(--font-sans);
+        font-weight: 500;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
+    }
+
+    /* Nagłówki główne — Montserrat Black 900, wersaliki */
+    h1,
+    h2 {
+        font-family: var(--font-sans) !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+    }
+
+    /* Podtytuły, etykiety, tagi — Saira Semi Condensed SemiBold 600, wersaliki */
+    h3,
+    h4,
+    .tracking-\[0\.2em\],
+    ul li .rounded-full,
+    article ul.flex li {
+        font-family: var(--font-display) !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+    }
+
+    /* Wymiary, daty, numery, kod — IBM Plex Mono Regular 400 */
+    code,
+    pre,
+    time {
+        font-family: var(--font-mono) !important;
+        font-weight: 400 !important;
     }
 
     ::selection {
@@ -137,9 +167,9 @@
 }
 
 /*
- * Animacje wejścia. Element z `data-reveal` startuje przygaszony i przesunięty,
- * a skrypt w Layout.astro (IntersectionObserver) dokłada `is-visible`.
- * Bez JS-u albo przy prefers-reduced-motion treść jest po prostu widoczna.
+- Animacje wejścia. Element z `data-reveal` startuje przygaszony i przesunięty,
+- a skrypt w Layout.astro (IntersectionObserver) dokłada `is-visible`.
+- Bez JS-u albo przy prefers-reduced-motion treść jest po prostu widoczna.
  */
 @layer components {
     [data-reveal] {
@@ -157,8 +187,8 @@
     }
 
     /*
-     * Typografia treści z markdown (opisy projektów). Kilkanaście linii zamiast
-     * wtyczki @tailwindcss/typography — używamy z tego i tak tylko czterech znaczników.
+- Typografia treści z markdown (opisy projektów). Kilkanaście linii zamiast
+- wtyczki @tailwindcss/typography — używamy z tego i tak tylko czterech znaczników.
      */
     .prose-forge {
         color: var(--tone-muted);
@@ -173,7 +203,8 @@
         margin-top: 2.5em;
         color: var(--tone-fg);
         font-size: 1.5rem;
-        font-weight: 700;
+        font-weight: 900;
+        text-transform: uppercase;
         letter-spacing: -0.02em;
     }
 
@@ -182,11 +213,13 @@
         color: var(--tone-fg);
         font-size: 1.175rem;
         font-weight: 600;
+        font-family: var(--font-display);
+        text-transform: uppercase;
     }
 
     .prose-forge strong {
         color: var(--tone-fg);
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .prose-forge a {
@@ -211,6 +244,7 @@
         background: var(--tone-surface);
         border-radius: 4px;
         font-size: 0.9em;
+        font-family: var(--font-mono);
     }
 }
 
